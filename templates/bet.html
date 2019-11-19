@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Create Account</title>
+        <title>{{ game }}</title>
     </head>
     <body>
         {% with errors = get_flashed_messages() %}
@@ -11,7 +11,7 @@
                 {% endfor %}
             </ul>
         {% endwith %}
-        <form>
+        <form action="bet" method="GET">
             <label>Spending Amount</label>
             <br/>
             <input type="submit" name="spending_amount" value="2"/>
@@ -19,6 +19,8 @@
             <input type="submit" name="spending_amount" value="10"/>
             <br/>
             <input type="submit" name="spending_amount" value="20"/>
+            <br/>
+            <input type="submit" name="add_funds" value="Add funds">
         </form>
     </body>
 </html>

@@ -69,8 +69,30 @@ def game():
     return render_template("game.html")
 
 
+@app.route("/bet", methods=["GET"])
+def bet():
+    if "add_funds" in request.args:
+        print("User is adding funds: ")
+        return redirect(url_for("pay"))
+    elif "spending_amount" in session:
+        print("User is spending: " + request.args["spending_amount"])
+        new_balance = database_query.get_balance(session["username"]) - int(request.args["spending_amount"])
+        if new_balance < 0:
+            flash("Not enough money in your account, please add more")
+        else:
+            database_query.update_balance(session["username"], new_balance)
+            session["paid"] = True
+    return redirect(url_for(session["current_game"]))
+
+
+@app.route("/pay")
+def pay():
+    return render_template("pay.html")
+
+
 @app.route("/pokemon")
 def pokemon():
+    session["current_game"] = "pokemon"
     return render_template("bet.html")
 
 
