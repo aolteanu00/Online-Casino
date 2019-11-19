@@ -4,6 +4,26 @@
         <title>Create Account</title>
     </head>
     <body>
-        Create Account
+        {% with errors = get_flashed_messages() %}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endwith %}
+        <form method="GET">
+            <label>Username</label>
+            <input type="text" name="username">
+            <br/>
+            <label>Password</label>
+            <input type="text" name="password">
+            <br/>
+            <label>Password again</label>
+            <input type="text" name="password_repeat">
+            <br/>
+            <input type="submit" value="Submit">
+            <br/>
+            <a href="/login">Return to login</a>
+        </forM>
     </body>
 </html>

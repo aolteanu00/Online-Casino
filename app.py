@@ -23,7 +23,7 @@ def login():
 
         if database_query.is_valid_login(username, password):
             session["username"] = username
-            redirect(url_for("game.html"))
+            return redirect(url_for("game"))
         else:
             flash("Wrong username or password")
 
@@ -32,6 +32,23 @@ def login():
 
 @app.route("/create-account", methods=["GET"])
 def create_account():
+    if len(request.args) == 3:
+        # User entered create account information
+        username: str = request.args["username"]
+        password: str = request.args["password"]
+        password_repeat: str = request.args["password_repeat"]
+
+        if password != password_repeat:
+            flash("Passwords do not match")
+        elif len(password.strip()) == 0:
+            flash("Passwords must not be blank")
+        elif len(username.strip()) == 0:
+            flash("Username must not be blank")
+        else:
+            database_query.create_account(username, password)
+            session["username"] = username
+            return redirect(url_for("game"))
+
     return render_template("create-account.html")
 
 

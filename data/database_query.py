@@ -11,5 +11,11 @@ def is_valid_login(username: str, password: str) -> bool:
     return not c.fetchone() is None
 
 
+def create_account(username: str, password: str):
+    print("asd");
+    c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 0)", (username, password))
+    db.commit()
+
+
 def close_db():
     db.close()
