@@ -8,21 +8,22 @@ app.secret_key = os.urandom(32)
 
 @app.route("/")
 def root():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    else:
+    if "username" in session:
         return redirect(url_for("game"))
+    else:
+        return redirect(url_for("login"))
 
 
 @app.route("/login", methods=["GET"])
 def login():
     if len(request.args) == 2:
-        # User entered log in information
-        username = request.args["username"]
-        password = request.args["password"]
+        # User entered login information
+        username: str = request.args["username"]
+        password: str = request.args["password"]
 
         if database_query.is_valid_login(username, password):
             session["username"] = username
+            print("Logged into account with username: " + username)
             return redirect(url_for("game"))
         else:
             flash("Wrong username or password")
@@ -46,6 +47,7 @@ def create_account():
             flash("Username must not be blank")
         else:
             database_query.create_account(username, password)
+            print("Created account with username: " + username)
             session["username"] = username
             return redirect(url_for("game"))
 
@@ -55,6 +57,7 @@ def create_account():
 @app.route("/logout")
 def logout():
     flash("You logged out")
+    print("Logged out of session (username " + session["username"] + ")")
     del session["username"]
     return redirect(url_for("login"))
 
