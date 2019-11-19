@@ -66,12 +66,16 @@ def logout():
 
 @app.route("/game")
 def game():
+    if "username" not in session:
+        return redirect(url_for("login"))
     session["paid"] = False
     return render_template("game.html")
 
 
 @app.route("/bet", methods=["GET"])
 def bet():
+    if "username" not in session:
+        return redirect(url_for("login"))
     print("Choosing amount to bet on")
     if "current_game" not in session:
         # If user: 1. Selects a game to play
@@ -106,16 +110,22 @@ def bet():
 
 @app.route("/pay")
 def pay():
+    if "username" not in session:
+        return redirect(url_for("login"))
     return render_template("pay.html")
 
 
 @app.route("/instruction")
 def instruction():
+    if "username" not in session:
+        return redirect(url_for("login"))
     return "Instructions"
 
 
 @app.route("/pokemon")
 def pokemon():
+    if "username" not in session:
+        return redirect(url_for("login"))
     print("Chose pokemon (No paid)")
     session["current_game"] = "pokemon"
     if not session["paid"]:
