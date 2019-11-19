@@ -52,6 +52,13 @@ def create_account():
     return render_template("create-account.html")
 
 
+@app.route("/logout")
+def logout():
+    flash("You logged out")
+    del session["username"]
+    return redirect(url_for("login"))
+
+
 @app.route("/game")
 def game():
     return render_template("game.html")
