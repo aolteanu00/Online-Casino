@@ -16,6 +16,8 @@ def create_account(username: str, password: str):
     c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 0)", (username, password))
     db.commit()
 
+def rickandmortydb(id: int, full_name: str, image_link: str):
+    c.execute("INSERT INTO rickandmorty(id, full_name, image_link) VALUES (?, ?, ?)", (id, full_name, image_link))
 
 def close_db():
     db.close()

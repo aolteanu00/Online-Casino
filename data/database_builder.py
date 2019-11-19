@@ -11,5 +11,12 @@ password TEXT,
 balance INTEGER
 )""")
 
+c.execute("""
+CREATE TABLE IF NOT EXISTS rickandmorty(
+id INTEGER PRIMARY KEY,
+full_name TEXT,
+image_link TEXT
+)""")
+
 db.commit()
 db.close()

@@ -67,6 +67,11 @@ def game():
     return render_template("game.html")
 
 
+# @app.route("/rickandmorty")
+# def rickandmortygame():
+#
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
