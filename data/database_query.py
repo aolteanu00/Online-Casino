@@ -1,6 +1,6 @@
 import sqlite3
 
-DB_FILE = "../data/database.db"
+DB_FILE = "database.db"
 
 
 def is_valid_login(username: str, password: str) -> bool:
