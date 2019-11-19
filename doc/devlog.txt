@@ -1,5 +1,21 @@
+williamC -- 2019-11-16 17:31
+Design document: Wrote instructions to play the Pokemon game; Drew a sitemap for how the Pokemon game will playout; Explained how the backend will function (DB, logic)
+
 MAWD -- 2019-11-16 17:55
 Each member worked on their specific part of the design doc. 
 
-abedinM caoW -- 2019-11-17 18:35
+mohidulA williamC-- 2019-11-17 18:35
 Finished up the design doc
+
+mohidulA- 2019-11-18 20:11
+Finalized the design document from feedback
+
+mohidulA- 2019-11-18 21:30
+Added DEADLINES FOLLOW THEM PLEASE!!!!
+
+williamC -- 2019-11-18 21:33
+Code base: Finished writing the login system. Wrote the database, html, and backend logic. There is no bootstrap, just raw HTML.
+
+
+
+
