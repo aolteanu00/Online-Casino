@@ -1,2 +1,5 @@
 MAWD -- 2019-11-16 17:55
 Each member worked on their specific part of the design doc. 
+
+abedinM caoW -- 2019-11-17 18:35
+Finished up the design doc
