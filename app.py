@@ -45,6 +45,8 @@ def create_account():
             flash("Passwords must not be blank")
         elif len(username.strip()) == 0:
             flash("Username must not be blank")
+        elif database_query.does_username_exist(username):
+            flash("Username already exists")
         else:
             database_query.create_account(username, password)
             print("Created account with username: " + username)
