@@ -8,3 +8,19 @@ set up a homepage with link to your game (to21), place holders for links to othe
 
 Devin 
 Get started on your game, specifically cahching the data from the API.   
+
+Due R 2019-11-21, 20:00, EST.
+
+William 
+cache data from pokemon api and get 4 random cards to player and computer. The game logic is a little difficult so we are gonna work on that later
+
+Alex 
+Try to get random cards to be given to the player/computer, 
+also use the betting page william made as the initial page for your game
+
+Devin 
+Get the multiple choice section done at the very least, but maybe you can finish it up 
+also use the betting page william made as the initial page for your game
+
+Mo
+Add balance system to users db
