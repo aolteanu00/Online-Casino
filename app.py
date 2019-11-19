@@ -83,13 +83,12 @@ def bet():
     if "add_funds" in request.args:
         print("User is adding funds:")
         return redirect(url_for("pay"))
-    elif "spending_amount" in session:
+    elif "spending_amount" in request.args:
         print("User is spending: " + request.args["spending_amount"])
         new_balance = database_query.get_balance(session["username"]) - int(request.args["spending_amount"])
         if new_balance < 0:
             print("Not enough in user's balance")
             flash("Not enough money in your account, please add more")
-            return render_template("bet.html")
         else:
             print("Entering " + session["current_game"])
             database_query.update_balance(session["username"], new_balance)
@@ -102,7 +101,7 @@ def bet():
     elif "instruction" in request.args:
         print("Request information for " + session["current_game"])
         return redirect(url_for("instruction"))
-    return render_template("bet.html")
+    return render_template("bet.html", game=session["current_game"])
 
 
 @app.route("/pay")
