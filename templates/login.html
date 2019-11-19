@@ -4,6 +4,19 @@
         <title>Login</title>
     </head>
     <body>
-        Login
+        {% with errors = get_flashed_messages() %}
+            {{ errors[0] }}
+        {% endwith %}
+        <form>
+            <label>Username</label>
+            <input type="text" name="username">
+            <br/>
+            <label>Password</label>
+            <input type="text" name="password">
+            <br/>
+            <input type="Submit" value="Submit"/>
+            <br/>
+            <a href="/create-account">Create An Account</a>
+        </form>
     </body>
 </html>
