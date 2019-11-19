@@ -1,0 +1,10 @@
+Due W 2019-11-20, 20:00, EST.
+
+William
+make a page for initial betting amount, all the games use this page so it's top prio.  
+
+Alex 
+set up a homepage with link to your game (to21), place holders for links to other 2 games and to the users profile
+
+Devin 
+Get started on your game, specifically cahching the data from the API.   
