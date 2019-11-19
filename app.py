@@ -66,23 +66,43 @@ def logout():
 
 @app.route("/game")
 def game():
+    session["paid"] = False
     return render_template("game.html")
 
 
 @app.route("/bet", methods=["GET"])
 def bet():
+    print("Choosing amount to bet on")
+    if "current_game" not in session:
+        # If user: 1. Selects a game to play
+        #          2. Clicks "go back"
+        #          3. Manually go back in history
+        # The server will crash
+        return redirect(url_for("game"))
+
     if "add_funds" in request.args:
-        print("User is adding funds: ")
+        print("User is adding funds:")
         return redirect(url_for("pay"))
     elif "spending_amount" in session:
         print("User is spending: " + request.args["spending_amount"])
         new_balance = database_query.get_balance(session["username"]) - int(request.args["spending_amount"])
         if new_balance < 0:
+            print("Not enough in user's balance")
             flash("Not enough money in your account, please add more")
+            return render_template("bet.html")
         else:
+            print("Entering " + session["current_game"])
             database_query.update_balance(session["username"], new_balance)
             session["paid"] = True
-    return redirect(url_for(session["current_game"]))
+            return redirect(url_for(session["current_game"]))
+    elif "go_back" in request.args:
+        print("Did not pay. Leaving " + session["current_game"])
+        del session["current_game"]
+        return redirect(url_for("game"))
+    elif "instruction" in request.args:
+        print("Request information for " + session["current_game"])
+        return redirect(url_for("instruction"))
+    return render_template("bet.html")
 
 
 @app.route("/pay")
@@ -90,10 +110,21 @@ def pay():
     return render_template("pay.html")
 
 
+@app.route("/instruction")
+def instruction():
+    return "Instructions"
+
+
 @app.route("/pokemon")
 def pokemon():
+    print("Chose pokemon (No paid)")
     session["current_game"] = "pokemon"
-    return render_template("bet.html")
+    if not session["paid"]:
+        return redirect(url_for("bet"))
+
+    print("Playing pokemon (Paid)")
+    session["paid"] = False
+    return "Playing Pokemon"
 
 
 if __name__ == "__main__":
