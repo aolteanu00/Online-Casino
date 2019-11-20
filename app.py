@@ -46,6 +46,8 @@ def create_account():
             flash("Passwords must not be blank")
         elif len(username.strip()) == 0:
             flash("Username must not be blank")
+        elif database_query.does_username_exist(username):
+            flash("Username already exists")
         else:
             database_query.create_account(username, password)
             print("Created account with username: " + username)
@@ -65,6 +67,9 @@ def logout():
 
 @app.route("/game")
 def game():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    session["paid"] = False
     return render_template("game.html")
 
 
@@ -76,6 +81,69 @@ def rickandmortygame():
     # character_info is a 2-D array with [0][0] being the name and [0][1] being the image link
     return render_template("rickandmorty.html", image = character_info[0][1])
 
+
+@app.route("/bet", methods=["GET"])
+def bet():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    print("Choosing amount to bet on")
+    if "current_game" not in session:
+        # If user: 1. Selects a game to play
+        #          2. Clicks "go back"
+        #          3. Manually go back in history
+        # The server will crash
+        return redirect(url_for("game"))
+
+    if "add_funds" in request.args:
+        print("User is adding funds:")
+        return redirect(url_for("pay"))
+    elif "spending_amount" in request.args:
+        print("User is spending: " + request.args["spending_amount"])
+        new_balance = database_query.get_balance(session["username"]) - int(request.args["spending_amount"])
+        if new_balance < 0:
+            print("Not enough in user's balance")
+            flash("Not enough money in your account, please add more")
+        else:
+            print("Entering " + session["current_game"])
+            database_query.update_balance(session["username"], new_balance)
+            session["paid"] = True
+            return redirect(url_for(session["current_game"]))
+    elif "go_back" in request.args:
+        print("Did not pay. Leaving " + session["current_game"])
+        del session["current_game"]
+        return redirect(url_for("game"))
+    elif "instruction" in request.args:
+        print("Request information for " + session["current_game"])
+        return redirect(url_for("instruction"))
+    return render_template("bet.html", game=session["current_game"])
+
+
+@app.route("/pay")
+def pay():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return render_template("pay.html")
+
+
+@app.route("/instruction")
+def instruction():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    return "Instructions"
+
+
+@app.route("/pokemon")
+def pokemon():
+    if "username" not in session:
+        return redirect(url_for("login"))
+    print("Chose pokemon (No paid)")
+    session["current_game"] = "pokemon"
+    if not session["paid"]:
+        return redirect(url_for("bet"))
+
+    print("Playing pokemon (Paid)")
+    session["paid"] = False
+    return "Playing Pokemon"
 
 
 if __name__ == "__main__":

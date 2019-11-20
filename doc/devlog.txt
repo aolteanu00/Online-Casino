@@ -1,16 +1,22 @@
+MAWD Devlog
+
 williamC -- 2019-11-16 17:31
 Design document: Wrote instructions to play the Pokemon game; Drew a sitemap for how the Pokemon game will playout; Explained how the backend will function (DB, logic)
 
 MAWD -- 2019-11-16 17:55
 Each member worked on their specific part of the design doc.
 
-mohidulA williamC-- 2019-11-17 18:35
+mohidulA williamC -- 2019-11-17 18:35
 Finished up the design doc
 
-mohidulA- 2019-11-18 20:11
-Finalized the design document from feedback
+mohidulA -- 2019-11-18 20:11
+Finalized the design document from feedback:
+  - added what we are using for front end
+  - added a list of APIs
+  - improved the explanation on pay/redeem features
+  - fixed users db (forgot password ooops) and removed unique ID
 
-mohidulA- 2019-11-18 21:30
+mohidulA -- 2019-11-18 21:30
 Added DEADLINES FOLLOW THEM PLEASE!!!!
 
 williamC -- 2019-11-18 21:33
@@ -19,8 +25,17 @@ Code base: Finished writing the login system. Wrote the database, html, and back
 devinL -- 2019-11-19 8:50
 Started rick and morty database. Made a separate .py file to hold the helper function to cache the rick and morty api.
 
+williamC -- 2019-11-19 17:54
+Code base: Wrote page and logic to bet amount on a game. Fixed bug of viewing routes that required login when user is not logged in.
+Design document: Updated how session will be handled
+
+mohidulA -- 2019-11-19 18:15
+Updated devlog to fix issues (eg adding a heading and formatting)
+NEW DEADLINES
+
+
 devinL -- 2019-11-19 22:00
 Finished with function to cache rick and morty api.
 changed database_query and database_builder with the addition of a rick and morty database and functions to work with said database.
 Coded the basic route for rick and morty game and made a very basic html page.
-At this point, the program is able to display a random image of a character from rick and morty upon refreshing the page. 
+At this point, the program is able to display a random image of a character from rick and morty upon refreshing the page.

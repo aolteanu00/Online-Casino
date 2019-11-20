@@ -5,8 +5,7 @@ c = db.cursor()
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS users(
-id INTEGER PRIMARY KEY,
-username TEXT,
+username TEXT PRIMARY KEY,
 password TEXT,
 balance INTEGER
 )""")
