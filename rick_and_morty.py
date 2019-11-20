@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from datetime import datetime
+from data import database_builder, database_query
 import urllib, json
 
 def rickandmortyapi():
@@ -11,9 +11,7 @@ def rickandmortyapi():
         data = json.loads(response)
         # Use a for loop to add every element to the database
         for i in data['results']:
-            print (i['name'])
+            database_query.rickandmortydb(i['id'], i['name'], i['image'])
             count -= 1
-        page = page + 1
+        page += 1
     return 0;
-
-rickandmortyapi()
