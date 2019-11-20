@@ -18,6 +18,12 @@ def create_account(username: str, password: str):
 
 def rickandmortydb(id: int, full_name: str, image_link: str):
     c.execute("INSERT INTO rickandmorty(id, full_name, image_link) VALUES (?, ?, ?)", (id, full_name, image_link))
+    db.commit()
+
+def rickandmorty_getinfo(id: int):
+    # this function takes a random id and returns a list containing the name and image link for a character from rick and morty
+    info = list(c.execute("SELECT full_name, image_link FROM rickandmorty WHERE id = ?;", (id, )))
+    return info
 
 def close_db():
     db.close()

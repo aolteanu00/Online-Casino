@@ -13,7 +13,7 @@ balance INTEGER
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS rickandmorty(
-id INTEGER PRIMARY KEY,
+id INTEGER,
 full_name TEXT,
 image_link TEXT
 )""")
