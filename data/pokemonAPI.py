@@ -1,6 +1,8 @@
 from urllib.request import Request, urlopen
+import sqlite3
 import json
 import time
+import os
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
@@ -72,5 +74,36 @@ def flatten_object_array(pokemon_types: list):
     return output
 
 
+def enter_database():
+    database = sqlite3.connect("database.db")
+    c = database.cursor()
+
+    # Pokemon data
+    with open('pokemon.json', 'r') as pokemon_file:
+        pokemon_insert = []
+        for pokemon_data in json.loads(pokemon_file.read()).values():
+            pokemon_insert.append((pokemon_data["name"],
+                                   pokemon_data["number_types"],
+                                   pokemon_data["first_type"],
+                                   pokemon_data["second_type"],
+                                   pokemon_data["image"]))
+        c.executemany("INSERT INTO pokemon VALUES (?, ?, ?, ?, ?)", pokemon_insert)
+
+    # Pokemon type data
+    with open('pokemon_type.json', 'r') as pokemon_type_file:
+        type_insert = []
+        for type_data in json.loads(pokemon_type_file.read()).values():
+            type_insert.append((type_data["name"],
+                                type_data["double_damage_from"],
+                                type_data["double_damage_to"],
+                                type_data["half_damage_from"],
+                                type_data["half_damage_to"],
+                                type_data["no_damage_from"]))
+        c.executemany("INSERT INTO pokemon_types VALUES (?, ?, ?, ?, ?, ?)", type_insert)
+
+    database.commit()
+    database.close()
+
+
 if __name__ == "__main__":
-    type_info()
+    enter_database()
