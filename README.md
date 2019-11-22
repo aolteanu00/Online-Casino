@@ -16,20 +16,31 @@ Our website is a collection of top-tier, big-brain, and purely skill based games
   - [Rick and Morty](https://docs.google.com/document/d/1oK0klhp__LHP9kxb3D70cbbI46i1mMnmDMI4y1XS3B4/edit)
   - [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
 
-## How to -- To be fixed: MO
-  1. Clone the repo 
-  2. Install the neccessary pakages using the requirements.txt
-  3. Run app.py 
-  4. Login and Play
-
 ## Instructions to Run
-1. Open a terminal, clone the repository, and change directory into it.
+1. Open a terminal. Run the following lines in the terminal to clone the repository and change directory into it.
     ```bash
     git clone https://github.com/Mabedin00/MAWD.git && cd MAWD
     ```
-2. Initialize the database by running the following:
+2. Install python virtualenv if it has not been done so already. The virtual environment should be in the root directory of the project
+    ```bash
+    # For macOS and Linux
+    python3 -m pip install --user virtualenv
+    # For Windows
+    py -m pip install --user virtualenv
+    ```
+3. Initialize the server by running the following:
     ```bash
     ./init.sh
     ```
-3. Open a web browser and type the following into the address "127.0.0.1:5000"
-4. ...
+4. Activate the virtual environment by running the appropriate command:
+    ```bash
+    # If you are running zsh
+    source venv/bin/activate
+    # If you are running bash
+    . venv/bin/activate
+    ``` 
+5. Start the web server by running:
+    ```bash
+    python3 app.py
+    ```
+6. Open a web browser and type the following into the address "127.0.0.1:5000"
