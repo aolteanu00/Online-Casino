@@ -1,8 +1,9 @@
-import urllib
+# from urllib.request import Request, urlopen
 import sqlite3
 import json
 import time
 import os
+import urllib.request
 
 # rickandmorty_apitodict() this only needs to be called once.
 # the resulting file should be uploaded to github as a static file which we can pull from
@@ -25,8 +26,8 @@ def get_and_store_RandMcharacters():
     data = {}
     data['characters'] = []
     while count > 0:
-        url = urllib.request.urlopen("https://rickandmortyapi.com/api/character/?page=" + str(page))
-        response = url.read()
+        request = urllib.request.urlopen("https://rickandmortyapi.com/api/character/?page=" + str(page))
+        response = request.read()
         result = json.loads(response)
         # Use a for loop to add every element to the database
         for i in result['results']:
@@ -39,6 +40,7 @@ def get_and_store_RandMcharacters():
         page += 1
     with open('data/rickandmortydata.json', 'w') as outfile:
         json.dump(data, outfile)
+    print("Got character info and cached into data/rickandmortydata.json")
 
 def enter_database():
     """
