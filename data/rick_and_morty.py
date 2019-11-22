@@ -1,8 +1,25 @@
-from flask import Flask, render_template
-from data import database_builder, database_query
-import urllib, json
+import urllib
+import sqlite3
+import json
+import time
+import os
 
-def rickandmorty_apitodict():
+# rickandmorty_apitodict() this only needs to be called once.
+# the resulting file should be uploaded to github as a static file which we can pull from
+
+# create a csv file and a function to read from the api and write to the csv file.
+# use the above function to read from said file and create the database instead of directly requesting from the API
+# this speeds things up instead of taking 20-30 seconds every time
+
+def get_and_store_RandMcharacters():
+    """
+    Gets information on every character from Rick and Morty.
+    The data is stored in the "data" directory as a JSON file.
+    The JSON file is an array of array. The nested array data is ordered as followed:
+        0: id of character
+        1: name of character
+        2: image link for character
+    """
     count = 493 # this is the total number of characters in rick and morty
     page = 1
     data = {}
@@ -20,26 +37,31 @@ def rickandmorty_apitodict():
             })
             count -= 1
         page += 1
-    with open('rickandmortydata.json', 'w') as outfile:
+    with open('data/rickandmortydata.json', 'w') as outfile:
         json.dump(data, outfile)
-    with open('rickandmortydata.json') as json_file:
+
+def enter_database():
+    """
+    Gets first generation pokemon and all the types (even those not in first generation) to store on the database.
+    The first time this function is called, the API data receieved will be cached in the "data" directory. Sequential
+    calls to this function will use the cached data instead.
+
+    Make sure the database has been created before this is called.
+    """
+    database = sqlite3.connect("data/database.db")
+    c = database.cursor()
+
+    # rick and morty data
+    if not os.path.exists("data/rickandmortydata.json"):
+        get_and_store_RandMcharacters()
+    with open('data/rickandmortydata.json') as json_file: # change this to not use database_query fucntion
         data = json.load(json_file)
         for i in data['characters']:
-            database_query.rickandmortydb(i['id'], i['name'], i['image_link'])
-    return 0
+            c.execute("INSERT INTO rickandmorty(id, full_name, image_link) VALUES (?, ?, ?)", (i['id'], i['name'], i['image_link']))
+
+    database.commit()
+    database.close()
 
 
-def rickandmorty_dicttodb():
-    with open('rickandmortydata.json') as json_file:
-        data = json.load(json_file)
-        for i in data['characters']:
-            database_query.rickandmortydb(i['id'], i['name'], i['image_link'])
-    return 0
-
-rickandmorty_dicttodb()
-# rickandmorty_apitodict() this only needs to be called once.
-# the resulting file should be uploaded to github as a static file which we can pull from
-
-# create a csv file and a function to read from the api and write to the csv file.
-# use the above function to read from said file and create the database instead of directly requesting from the API
-# this speeds things up instead of taking 20-30 seconds every time
+if __name__ == "__main__":
+    enter_database()
