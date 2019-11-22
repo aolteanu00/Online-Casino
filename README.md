@@ -16,6 +16,11 @@ Our website is a collection of top-tier, big-brain, and purely skill based games
   - [Rick and Morty](https://docs.google.com/document/d/1oK0klhp__LHP9kxb3D70cbbI46i1mMnmDMI4y1XS3B4/edit)
   - [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
   
+## How to
+  1. Clone the repo 
+  2. Install the neccessary pakages using the requirements.txt
+  3. Run app.py 
+  4. Login and Play
 
   
  
