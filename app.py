@@ -1,6 +1,6 @@
 import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
-from data import database_builder, database_query
+from data import database_query
 
 
 app = Flask(__name__)

@@ -33,9 +33,23 @@ mohidulA -- 2019-11-19 18:15
 Updated devlog to fix issues (eg adding a heading and formatting)
 NEW DEADLINES
 
-
 devinL -- 2019-11-19 22:00
 Finished with function to cache rick and morty api.
 changed database_query and database_builder with the addition of a rick and morty database and functions to work with said database.
 Coded the basic route for rick and morty game and made a very basic html page.
 At this point, the program is able to display a random image of a character from rick and morty upon refreshing the page.
+
+williamC -- 2019-11-20 9:54
+Cached pokemon data (only to JSON not DB)
+
+MAWD -- 2019-11-20 18:11
+THe issue of ego hindering work exists in almost any field, but it seems more prevalent in the field of computer science. The article does a really good job explaioning how to avoid those problems using proper examples. We personally liked the interaction between Bill and Marilyn, mostly because Bill laughing at his own horrible code was relatable. 
+THINGS WE WILL DO
+  - The PM will make sure to assist any and all members with their part of the project, and the other members should also help eachother out even if they are working on different games.
+  - We will make the environment as friendly as possible, especially for code review
+  - Each programmer will try to reach out and ask for help when needed 
+
+williamC -- 2019-11-21 23:05
+Finished caching data and reading into DB (brought initialization time from 4s to .13s).
+Wrote init.sh to make initializing database easier ("$ ./init.sh" to run)
+Updated README.md with instructions to run the program and initialize the database
