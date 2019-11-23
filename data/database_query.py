@@ -28,6 +28,15 @@ def rickandmorty_getinfo(id: int):
     info = list(c.execute("SELECT full_name, image_link FROM rickandmorty WHERE id = ?;", (id, )))
     return info
 
+
+def pokemon_type_info() -> list:
+    """
+    :return: List of tuple of name, double damage to, half damage to and no damage to
+    """
+    return c.execute("SELECT * FROM pokemon_types").fetchall()
+
+
+
 def update_balance(username: str, new_balance: int):
     c.execute("UPDATE users SET balance = ? WHERE username = ?", (new_balance, username))
     db.commit()
