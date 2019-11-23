@@ -16,7 +16,7 @@ headers = {
 
 def get_and_store_pokemon():
     """
-    Gets information on the first generation pokemon (National Dex 1 to 151):
+    Gets information on the first and second generation pokemon (National Dex 1 to 252):
     The data is stored in the "data" directory as a JSON file.
     The JSON file is an array of array. The nested array data is ordered as followed:
         0: name
@@ -27,8 +27,8 @@ def get_and_store_pokemon():
     """
     pokemons = []
 
-    # We are only using first gen pokemon
-    for pokemon_id in range(1, 152):
+    # We are only using first and second gen pokemon
+    for pokemon_id in range(1, 252):
         request = Request("https://pokeapi.co/api/v2/pokemon/{}".format(pokemon_id), headers=headers)
         response = urlopen(request).read()
         data = json.loads(response)
@@ -45,7 +45,7 @@ def get_and_store_pokemon():
         pokemons.append(pokemon_info)
 
         # We are limited to 100 request per minute, so we need to pause for 1 second at an arbitrary middle
-        if pokemon_id == 90:
+        if pokemon_id % 90 == 0:
             time.sleep(1)
 
     file = open("data/pokemon.json", 'w')
@@ -65,7 +65,7 @@ def get_and_store_types():
     """
     types = []
 
-    # Even though we are using first gen pokemon, we should still store ALL types to make
+    # Even though we are using first and second gen pokemon, we should still store ALL types to make
     # expandability easier and for cleaner code (don't need to have a lot of if statements)
     for type_id in range(1, 19):
         request = Request("https://pokeapi.co/api/v2/type/{}".format(type_id), headers=headers)
