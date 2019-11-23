@@ -16,7 +16,7 @@ def is_valid_login(username: str, password: str) -> bool:
 
 
 def create_account(username: str, password: str):
-    c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 0)", (username, password))
+    c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 1000)", (username, password))
     db.commit()
 
 def rickandmortydb(id: int, full_name: str, image_link: str):

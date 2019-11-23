@@ -1,7 +1,8 @@
 import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
-
+from pokemon_game import pokemon_game
+import random
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
@@ -107,6 +108,7 @@ def bet():
             print("Entering " + session["current_game"])
             database_query.update_balance(session["username"], new_balance)
             session["paid"] = True
+            session["bet_amount"] = int(request.args["spending_amount"])
             return redirect(url_for(session["current_game"]))
     elif "go_back" in request.args:
         print("Did not pay. Leaving " + session["current_game"])
@@ -136,14 +138,54 @@ def instruction():
 def pokemon():
     if "username" not in session:
         return redirect(url_for("login"))
-    print("Chose pokemon (No paid)")
-    session["current_game"] = "pokemon"
+
+    if "game_state" not in session:
+        print("Pregame state")
+        session["current_game"] = "pokemon"
+        session["game_state"] = []
+        print("----")
+        print(str(session["game_state"]))
+        print("----")
+
     if not session["paid"]:
+        # User needs to pay
         return redirect(url_for("bet"))
 
-    print("Playing pokemon (Paid)")
-    session["paid"] = False
-    return "Playing Pokemon"
+    if "initialized" not in session["game_state"]:
+        print("initializng game")
+        # Initialize Game
+        session["computer_pokemons"] = pokemon_game.get_four_random_pokemons()
+        session["user_pokemons"] = pokemon_game.get_four_random_pokemons()
+        session["computer_selected_pokemon"] = random.choice(session["computer_pokemons"])
+        session["game_state"].append("initialized")
+
+    if "result" in session["game_state"]:
+        user_change_balance = pokemon_game.user_balance_lost(session["user_selected_pokemon"], session["computer_selected_pokemon"], session["bet_amount"])
+        if user_change_balance == 0:
+            winner_message = "Tie!"
+        elif user_change_balance > 0:
+            winner_message = "You won!"
+        else:
+            winner_message = "You lost"
+        del session["game_state"]
+        return render_template("pokemon/result.html",
+                               computer_pokemons=[pokemon_game.get_pokemon(name) for name in session["computer_pokemons"]],
+                               computer_selected_pokemon=pokemon_game.get_pokemon(session["computer_selected_pokemon"]),
+                               user_pokemons=[pokemon_game.get_pokemon(name) for name in session["user_pokemons"]],
+                               user_selected_pokemon=pokemon_game.get_pokemon(session["user_selected_pokemon"]),
+                               winner_message=winner_message)
+    else:
+        return render_template("pokemon/play.html", user_pokemons=[pokemon_game.get_pokemon(name) for name in session["user_pokemons"]])
+
+
+@app.route("/api/pokemon/select", methods=["POST"])
+def api_pokemon_select():
+    if request.form["pokemon"] in session["user_pokemons"]:
+        session["user_selected_pokemon"] = request.form["pokemon"]
+        session["game_state"].append("result")
+    else:
+        flash("Please choose a pokemon")
+    return redirect(url_for("pokemon"))
 
 
 if __name__ == "__main__":

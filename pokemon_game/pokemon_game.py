@@ -11,17 +11,21 @@ for pokemon in query.pokemon_info():
     pokemons[pokemon_name] = Pokemon(*pokemon)
 
 
-def get_random_pokemon():
+def get_random_pokemon() -> Pokemon:
     return random.choice(list(pokemons.values()))
 
 
-def get_pokemon(name: str):
+def get_pokemon(name: str) -> Pokemon:
     if name not in pokemons.keys():
         print("{} is not a pokemon we have".format(name))
     return pokemons[name]
 
 
-def user_balance_lost(user_pokemon: Pokemon, computer_pokemon: Pokemon, bet_amount) -> int:
+def get_four_random_pokemons() -> list:
+    return [get_random_pokemon().name for _ in range(0, 4)]
+
+
+def user_balance_lost(user_pokemon: str, computer_pokemon: str, bet_amount) -> int:
     """
     Determine winner based on pokemon chosen by user and computer.
     Pokemon A, and B:
@@ -46,6 +50,8 @@ def user_balance_lost(user_pokemon: Pokemon, computer_pokemon: Pokemon, bet_amou
     :return: Negative if user lost, positive is user won. Returned amount is the change in balance.
              For example, if it is -2 then the user lost 2 dollars and the website owner won 2 dollars
     """
+    user_pokemon = get_pokemon(user_pokemon)
+    computer_pokemon = get_pokemon(computer_pokemon)
     user_attack = type_logic.damage_to(user_pokemon.first_type, computer_pokemon.first_type) + type_logic.damage_to(user_pokemon.first_type, computer_pokemon.second_type)
     computer_attack = type_logic.damage_to(computer_pokemon.first_type, user_pokemon.first_type) + type_logic.damage_to(computer_pokemon.first_type, user_pokemon.second_type)
     difference = abs(user_attack - computer_attack)
