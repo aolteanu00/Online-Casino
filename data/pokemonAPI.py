@@ -33,14 +33,13 @@ def get_and_store_pokemon():
         response = urlopen(request).read()
         data = json.loads(response)
 
-        # Order of information:
-
         number_of_types = len(data["types"])
         pokemon_info = [
             data['name'],
             number_of_types,
-            data["types"][0]["type"]["name"],
+            # The primary type is index 1 and secondary type is index 0
             data["types"][1]["type"]["name"] if number_of_types == 2 else data["types"][0]["type"]["name"],
+            data["types"][0]["type"]["name"] if number_of_types == 2 else data["types"][0]["type"]["name"],
             data["sprites"]["front_default"]
         ]
         pokemons.append(pokemon_info)
