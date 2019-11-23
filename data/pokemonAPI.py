@@ -60,11 +60,9 @@ def get_and_store_types():
     The data is stored in the "data" directory as a JSON file.
     The JSON file is an array of array. The nested array data is ordered as followed:
         0: name
-        1: double damage from
-        2: double damage to
-        3: half damage from
-        4: half damage to
-        5: no damage from
+        1: double damage to
+        2: half damage to
+        3: no damage to
     """
     types = []
 
@@ -77,11 +75,9 @@ def get_and_store_types():
 
         type_info = [
             data["name"],
-            flatten_object_array(data["damage_relations"]["double_damage_from"]),
             flatten_object_array(data["damage_relations"]["double_damage_to"]),
-            flatten_object_array(data["damage_relations"]["half_damage_from"]),
             flatten_object_array(data["damage_relations"]["half_damage_to"]),
-            flatten_object_array(data["damage_relations"]["no_damage_from"])
+            flatten_object_array(data["damage_relations"]["no_damage_to"])
         ]
         types.append(type_info)
 
@@ -125,7 +121,7 @@ def enter_database():
     with open('data/pokemon_types.json', 'r') as pokemon_types_file:
         # The file is an array of array of type information
         type_insert = [tuple(type_info) for type_info in json.loads(pokemon_types_file.read())]
-        c.executemany("INSERT INTO pokemon_types VALUES (?, ?, ?, ?, ?, ?)", type_insert)
+        c.executemany("INSERT INTO pokemon_types VALUES (?, ?, ?, ?)", type_insert)
 
     database.commit()
     database.close()

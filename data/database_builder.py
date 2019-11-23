@@ -29,11 +29,9 @@ image TEXT
 c.execute("""
 CREATE TABLE IF NOT EXISTS pokemon_types(
 name TEXT PRIMARY KEY,
-double_damage_from TEXT,
 double_damage_to TEXT,
-half_damage_from TEXT,
 half_damage_to TEXT,
-no_damage_from TEXT
+no_damage_to TEXT
 )""")
 
 db.commit()
