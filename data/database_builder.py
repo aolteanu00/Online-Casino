@@ -3,6 +3,13 @@ import sqlite3
 db = sqlite3.connect("data/database.db")
 c = db.cursor()
 
+# This is the owner of website information
+# Stores balance of website (user's lost money goes here)
+c.execute("""
+CREATE TABLE IF NOT EXISTS admin(
+balance INTEGER
+)""")
+
 c.execute("""
 CREATE TABLE IF NOT EXISTS users(
 username TEXT PRIMARY KEY,

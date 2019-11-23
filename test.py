@@ -1,5 +1,5 @@
 import unittest
-from pokemon_game import type_logic
+from pokemon_game import type_logic, pokemon_attack_logic
 
 
 class TestPokemonTypes(unittest.TestCase):
@@ -11,6 +11,29 @@ class TestPokemonTypes(unittest.TestCase):
         self.assertEqual(type_logic.damage_to("grass", "steel"), .5)
         self.assertEqual(type_logic.damage_to("water", "psychic"), 1)
         self.assertEqual(type_logic.damage_to("psychic", "dark"), 0)
+        self.assertEqual(type_logic.damage_to("normal", "steel"), 0.5)
+
+
+class TestPokemonBattle(unittest.TestCase):
+    def test(self):
+        self.assertEqual(pokemon_attack_logic.user_balance_lost(pokemon_attack_logic.get_pokemon("raticate"),
+                                                                pokemon_attack_logic.get_pokemon("kabutops"), 10), -5)
+        self.assertEqual(pokemon_attack_logic.user_balance_lost(pokemon_attack_logic.get_pokemon("kadabra"),
+                                                                pokemon_attack_logic.get_pokemon("ekans"), 10), 10)
+        self.assertEqual(pokemon_attack_logic.user_balance_lost(pokemon_attack_logic.get_pokemon("poliwhirl"),
+                                                                pokemon_attack_logic.get_pokemon("tangela"), 10), -10)
+        self.assertEqual(pokemon_attack_logic.user_balance_lost(pokemon_attack_logic.get_pokemon("skiploom"),
+                                                                pokemon_attack_logic.get_pokemon("dugtrio"), 10), 10)
+
+    def test_type(self):
+        self.assertEqual(pokemon_attack_logic.get_pokemon("charmander").first_type, "fire")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("charmander").second_type, "fire")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("venusaur").first_type, "grass")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("venusaur").second_type, "poison")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("teddiursa").first_type, "normal")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("teddiursa").second_type, "normal")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("steelix").first_type, "steel")
+        self.assertEqual(pokemon_attack_logic.get_pokemon("steelix").second_type, "ground")
 
 
 if __name__ == '__main__':

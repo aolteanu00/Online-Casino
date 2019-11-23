@@ -36,6 +36,12 @@ def pokemon_type_info() -> list:
     return c.execute("SELECT * FROM pokemon_types").fetchall()
 
 
+def pokemon_info() -> list:
+    """
+    :return: List of tuple of name, number of types, first type, second type, and image. First and second type can be identical
+    """
+    return c.execute("SELECT * FROM pokemon").fetchall()
+
 
 def update_balance(username: str, new_balance: int):
     c.execute("UPDATE users SET balance = ? WHERE username = ?", (new_balance, username))
