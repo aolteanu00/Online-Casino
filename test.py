@@ -16,14 +16,10 @@ class TestPokemonTypes(unittest.TestCase):
 
 class TestPokemonBattle(unittest.TestCase):
     def test(self):
-        self.assertEqual(pokemon_game.user_balance_lost(pokemon_game.get_pokemon("raticate"),
-                                                                pokemon_game.get_pokemon("kabutops"), 10), -5)
-        self.assertEqual(pokemon_game.user_balance_lost(pokemon_game.get_pokemon("kadabra"),
-                                                                pokemon_game.get_pokemon("ekans"), 10), 10)
-        self.assertEqual(pokemon_game.user_balance_lost(pokemon_game.get_pokemon("poliwhirl"),
-                                                                pokemon_game.get_pokemon("tangela"), 10), -10)
-        self.assertEqual(pokemon_game.user_balance_lost(pokemon_game.get_pokemon("skiploom"),
-                                                                pokemon_game.get_pokemon("dugtrio"), 10), 10)
+        self.assertEqual(pokemon_game.user_balance_lost("raticate", "kabutops", 10), -5)
+        self.assertEqual(pokemon_game.user_balance_lost("kadabra", "ekans", 10,), 10)
+        self.assertEqual(pokemon_game.user_balance_lost("poliwhirl", "tangela", 10), -10)
+        self.assertEqual(pokemon_game.user_balance_lost("skiploom", "dugtrio", 10), 10)
 
     def test_type(self):
         self.assertEqual(pokemon_game.get_pokemon("charmander").first_type, "fire")
