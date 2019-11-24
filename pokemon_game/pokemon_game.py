@@ -61,7 +61,7 @@ def user_balance_lost(user_pokemon: str, computer_pokemon: str, bet_amount) -> i
     if difference == 0:
         # 45% of this happening
         money_exchange = 0
-    if .5 <= difference <= 1.5:
+    elif .5 <= difference <= 1.5:
         # 33% of this happening
         money_exchange = .5 * bet_amount
     else:
