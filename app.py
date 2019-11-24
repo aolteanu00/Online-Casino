@@ -72,6 +72,8 @@ def logout():
 def game():
     if "username" not in session:
         return redirect(url_for("login"))
+    if "current_game" in session:
+        return redirect(url_for(session["current_game"]))
     session["paid"] = False
     return render_template("game.html")
 
