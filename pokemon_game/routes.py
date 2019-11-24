@@ -31,8 +31,10 @@ def pokemon():
 
     # Cannot play multiple games at once
     if "current_game" in session and session["current_game"] != "pokemon_game.pokemon":
+        print("Trying to play pokemon but is already playing " + session["current_game"])
         return redirect(url_for("game"))
     else:
+        session["current_game"] = "pokemon_game.pokemon"
         # If the user is already playing this game and either goes back in history from browser / manually enter url,
         # bring them to the route they are supposed to be on
         if "game_state" in session:
@@ -42,7 +44,6 @@ def pokemon():
                 return redirect(url_for("./pokemon_result"))
         else:
             print("User is now playing pokemon")
-            session["current_game"] = "pokemon_game.pokemon"
             session["game_state"] = "pregame"
 
     # Must pay before
@@ -127,6 +128,7 @@ def pokemon_result():
     del session["game_state"]
     session["paid"] = False
     session["bet_amount"] = 0
+    del session["current_game"]
 
     return render_template("pokemon/result.html",
                            computer_pokemons=computer_pokemons,
