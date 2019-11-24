@@ -1,4 +1,5 @@
 import sqlite3
+import atexit
 
 DB_FILE = "data/database.db"
 
@@ -16,7 +17,7 @@ def is_valid_login(username: str, password: str) -> bool:
 
 
 def create_account(username: str, password: str):
-    c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 0)", (username, password))
+    c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 1000)", (username, password))
     db.commit()
 
 def rickandmortydb(id: int, full_name: str, image_link: str):
@@ -28,6 +29,21 @@ def rickandmorty_getinfo(id: int):
     info = list(c.execute("SELECT full_name, image_link FROM rickandmorty WHERE id = ?;", (id, )))
     return info
 
+
+def pokemon_type_info() -> list:
+    """
+    :return: List of tuple of name, double damage to, half damage to and no damage to
+    """
+    return c.execute("SELECT * FROM pokemon_types").fetchall()
+
+
+def pokemon_info() -> list:
+    """
+    :return: List of tuple of name, number of types, first type, second type, and image. First and second type can be identical
+    """
+    return c.execute("SELECT * FROM pokemon").fetchall()
+
+
 def update_balance(username: str, new_balance: int):
     c.execute("UPDATE users SET balance = ? WHERE username = ?", (new_balance, username))
     db.commit()
@@ -38,4 +54,7 @@ def get_balance(username: str) -> int:
 
 
 def close_db():
+    db.commit()
     db.close()
+
+atexit.register(close_db)

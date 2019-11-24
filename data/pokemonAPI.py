@@ -16,7 +16,7 @@ headers = {
 
 def get_and_store_pokemon():
     """
-    Gets information on the first generation pokemon (National Dex 1 to 151):
+    Gets information on the first and second generation pokemon (National Dex 1 to 252):
     The data is stored in the "data" directory as a JSON file.
     The JSON file is an array of array. The nested array data is ordered as followed:
         0: name
@@ -27,26 +27,25 @@ def get_and_store_pokemon():
     """
     pokemons = []
 
-    # We are only using first gen pokemon
-    for pokemon_id in range(1, 152):
+    # We are only using first and second gen pokemon
+    for pokemon_id in range(1, 252):
         request = Request("https://pokeapi.co/api/v2/pokemon/{}".format(pokemon_id), headers=headers)
         response = urlopen(request).read()
         data = json.loads(response)
-
-        # Order of information:
 
         number_of_types = len(data["types"])
         pokemon_info = [
             data['name'],
             number_of_types,
-            data["types"][0]["type"]["name"],
+            # The primary type is index 1 and secondary type is index 0
             data["types"][1]["type"]["name"] if number_of_types == 2 else data["types"][0]["type"]["name"],
+            data["types"][0]["type"]["name"] if number_of_types == 2 else data["types"][0]["type"]["name"],
             data["sprites"]["front_default"]
         ]
         pokemons.append(pokemon_info)
 
         # We are limited to 100 request per minute, so we need to pause for 1 second at an arbitrary middle
-        if pokemon_id == 90:
+        if pokemon_id % 90 == 0:
             time.sleep(1)
 
     file = open("data/pokemon.json", 'w')
@@ -60,15 +59,13 @@ def get_and_store_types():
     The data is stored in the "data" directory as a JSON file.
     The JSON file is an array of array. The nested array data is ordered as followed:
         0: name
-        1: double damage from
-        2: double damage to
-        3: half damage from
-        4: half damage to
-        5: no damage from
+        1: double damage to
+        2: half damage to
+        3: no damage to
     """
     types = []
 
-    # Even though we are using first gen pokemon, we should still store ALL types to make
+    # Even though we are using first and second gen pokemon, we should still store ALL types to make
     # expandability easier and for cleaner code (don't need to have a lot of if statements)
     for type_id in range(1, 19):
         request = Request("https://pokeapi.co/api/v2/type/{}".format(type_id), headers=headers)
@@ -77,11 +74,9 @@ def get_and_store_types():
 
         type_info = [
             data["name"],
-            flatten_object_array(data["damage_relations"]["double_damage_from"]),
             flatten_object_array(data["damage_relations"]["double_damage_to"]),
-            flatten_object_array(data["damage_relations"]["half_damage_from"]),
             flatten_object_array(data["damage_relations"]["half_damage_to"]),
-            flatten_object_array(data["damage_relations"]["no_damage_from"])
+            flatten_object_array(data["damage_relations"]["no_damage_to"])
         ]
         types.append(type_info)
 
@@ -125,7 +120,7 @@ def enter_database():
     with open('data/pokemon_types.json', 'r') as pokemon_types_file:
         # The file is an array of array of type information
         type_insert = [tuple(type_info) for type_info in json.loads(pokemon_types_file.read())]
-        c.executemany("INSERT INTO pokemon_types VALUES (?, ?, ?, ?, ?, ?)", type_insert)
+        c.executemany("INSERT INTO pokemon_types VALUES (?, ?, ?, ?)", type_insert)
 
     database.commit()
     database.close()

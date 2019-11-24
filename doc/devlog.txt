@@ -57,3 +57,10 @@ Updated README.md with instructions to run the program and initialize the databa
 williamC -- 2019-11-22 13:03
 Added instructions to create virtual environment and install required packages. Added more automation to init.sh for
 user setting up the server
+
+williamC -- 2019-11-23 00:028
+Finished logic for determining who wins in pokemon game and wrote tests (automated testing)
+
+williamC -- 2019-11-23 13:36
+Finished writing game for Pokemon Versus. The biggest bug to fix now is a user going back and forward in history
+from browser. Code is very messy, missing comments, terrible variable names, will need to be fixed.

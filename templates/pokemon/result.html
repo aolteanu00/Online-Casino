@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Playing Pokemon!</title>
+    </head>
+    <body>
+        <div style="display: flex; flex-direction: row">
+            {% for pokemon in computer_pokemons%}
+            <div style="background: red; width: 100px; height: 75px;">
+                {{ pokemon.name }}
+                {% if computer_selected_pokemon.name == pokemon.name %}
+                SELECTED
+                {% endif %}
+                {% if pokemon.number_types == 2%}
+                    {{ pokemon.first_type }}
+                    {{ pokemon.second_type }}
+                {% else %}
+                    {{ pokemon.first_type }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <hr>
+        <h1>{{ winner_message }}</h1>
+        <hr>
+        <div style="display: flex; flex-direction: row">
+            {% for pokemon in user_pokemons %}
+            <div style="background: red; width: 100px; height: 75px;">
+                {{ pokemon.name }}
+                {% if user_selected_pokemon.name == pokemon.name %}
+                SELECTED
+                {% endif %}
+                {% if pokemon.number_types == 2%}
+                    {{ pokemon.first_type }}
+                    {{ pokemon.second_type }}
+                {% else %}
+                    {{ pokemon.first_type }}
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

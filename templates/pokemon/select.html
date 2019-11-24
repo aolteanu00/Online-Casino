@@ -1,0 +1,33 @@
+<!--
+Parameters required:
+user_pokemons: List of namedtuple with fields: ["name", "number_types", "first_type", "second_type", "image"]
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Playing Pokemon!</title>
+    </head>
+    <body>
+        <div style="display: flex; flex-direction: row">
+            {% for cardNumber in range(0, 4)%}
+            <div style="background: red; width: 100px; height: 75px;">
+                {{ cardNumber }}
+            </div>
+            {% endfor %}
+        </div>
+        <form action="/pokemon/result" method="POST">
+            {% for pokemon in user_pokemons %}
+            <input type="submit" style="background: cyan; width: 100px; height: 75px;" value={{pokemon.name}} name="pokemon_selected">
+                {{ pokemon.name }}
+                {% if pokemon.number_types == 2%}
+                    {{ pokemon.first_type }}
+                    {{ pokemon.second_type }}
+                {% else %}
+                    {{ pokemon.first_type }}
+                {% endif %}
+            </input>
+        {% endfor %}
+        </form>
+    </body>
+</html>
