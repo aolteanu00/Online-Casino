@@ -1,4 +1,5 @@
 import sqlite3
+import atexit
 
 DB_FILE = "data/database.db"
 
@@ -53,4 +54,7 @@ def get_balance(username: str) -> int:
 
 
 def close_db():
+    db.commit()
     db.close()
+
+atexit.register(close_db)
