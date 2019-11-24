@@ -64,7 +64,7 @@ def create_account():
 def logout():
     flash("You logged out")
     print("Logged out of session (username " + session["username"] + ")")
-    del session["username"]
+    session.clear()
     return redirect(url_for("login"))
 
 
@@ -91,10 +91,6 @@ def bet():
         return redirect(url_for("login"))
     print("Choosing amount to bet on")
     if "current_game" not in session:
-        # If user: 1. Selects a game to play
-        #          2. Clicks "go back"
-        #          3. Manually go back in history
-        # The server will crash
         return redirect(url_for("game"))
 
     if "add_funds" in request.args:
