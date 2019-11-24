@@ -1,3 +1,10 @@
+"""
+Session data:
+- "paid" (bool): True if user paid, false if user has not paid. This should be set to False when user finishes a game
+- "current_game" (str): This should be the route to the entrance of your game. This should work when you run redirect(url_for(session["current_game"]))
+
+Session is all cleared when user logouts
+"""
 import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
