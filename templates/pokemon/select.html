@@ -1,16 +1,14 @@
+<!--
+Parameters required:
+user_pokemons: List of namedtuple with fields: ["name", "number_types", "first_type", "second_type", "image"]
+-->
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>Playing Pokemon!</title>
     </head>
     <body>
-        {% with errors = get_flashed_messages() %}
-            <ul>
-                {% for error in errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endwith %}
         <div style="display: flex; flex-direction: row">
             {% for cardNumber in range(0, 4)%}
             <div style="background: red; width: 100px; height: 75px;">
@@ -18,9 +16,9 @@
             </div>
             {% endfor %}
         </div>
-        <form action="api/pokemon/select" method="POST">
+        <form action="/pokemon/result" method="POST">
             {% for pokemon in user_pokemons %}
-            <input type="submit" style="background: cyan; width: 100px; height: 75px;" value={{pokemon.name}} name="pokemon">
+            <input type="submit" style="background: cyan; width: 100px; height: 75px;" value={{pokemon.name}} name="pokemon_selected">
                 {{ pokemon.name }}
                 {% if pokemon.number_types == 2%}
                     {{ pokemon.first_type }}
