@@ -20,6 +20,7 @@ class TestPokemonBattle(unittest.TestCase):
         self.assertEqual(pokemon_game.user_balance_lost("kadabra", "ekans", 10,), 10)
         self.assertEqual(pokemon_game.user_balance_lost("poliwhirl", "tangela", 10), -10)
         self.assertEqual(pokemon_game.user_balance_lost("skiploom", "dugtrio", 10), 10)
+        self.assertEqual(pokemon_game.user_balance_lost("kangaskhan", "ponyta", 10), 0)
 
     def test_type(self):
         self.assertEqual(pokemon_game.get_pokemon("charmander").first_type, "fire")
