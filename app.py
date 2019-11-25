@@ -2,6 +2,7 @@
 Session data:
 - "paid" (bool): True if user paid, false if user has not paid. This should be set to False when user finishes a game
 - "current_game" (str): This should be the route to the entrance of your game. This should work when you run redirect(url_for(session["current_game"]))
+- "bet_amount" (int): Amount the user is betting on the game.
 
 Session is all cleared when user logouts
 """
