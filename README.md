@@ -21,7 +21,7 @@ Our website is a collection of top-tier, big-brain, and purely skill based games
     ```bash
     git clone https://github.com/Mabedin00/MAWD.git && cd MAWD
     ```
-2. Install python virtualenv if it has not been done so already. The virtual environment should be in the root directory of the project
+2. Install python virtualenv if it has not been done so already.  
     ```bash
     # For macOS and Linux
     python3 -m pip install --user virtualenv
