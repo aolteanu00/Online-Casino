@@ -24,3 +24,16 @@ also use the betting page william made as the initial page for your game
 
 Mo
 Add balance system to users db
+
+Due M 2019-11-25, 08:00, EST.
+
+Alex
+Get random cards up
+
+Devin 
+Finish the game
+
+William
+Get random pokemon for both player and computer with types and names
+
+

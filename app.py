@@ -1,10 +1,20 @@
+"""
+Session data:
+- "paid" (bool): True if user paid, false if user has not paid. This should be set to False when user finishes a game
+- "current_game" (str): This should be the route to the entrance of your game. This should work when you run redirect(url_for(session["current_game"]))
+
+Session is all cleared when user logouts
+"""
 import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
-
+from pokemon_game.routes import pokemon_game
+import random
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
+
+app.register_blueprint(pokemon_game)
 
 
 @app.route("/")
@@ -61,7 +71,7 @@ def create_account():
 def logout():
     flash("You logged out")
     print("Logged out of session (username " + session["username"] + ")")
-    del session["username"]
+    session.clear()
     return redirect(url_for("login"))
 
 
@@ -69,6 +79,8 @@ def logout():
 def game():
     if "username" not in session:
         return redirect(url_for("login"))
+    if "current_game" in session:
+        return redirect(url_for(session["current_game"]))
     session["paid"] = False
     return render_template("game.html")
 
@@ -88,10 +100,6 @@ def bet():
         return redirect(url_for("login"))
     print("Choosing amount to bet on")
     if "current_game" not in session:
-        # If user: 1. Selects a game to play
-        #          2. Clicks "go back"
-        #          3. Manually go back in history
-        # The server will crash
         return redirect(url_for("game"))
 
     if "add_funds" in request.args:
@@ -107,6 +115,7 @@ def bet():
             print("Entering " + session["current_game"])
             database_query.update_balance(session["username"], new_balance)
             session["paid"] = True
+            session["bet_amount"] = int(request.args["spending_amount"])
             return redirect(url_for(session["current_game"]))
     elif "go_back" in request.args:
         print("Did not pay. Leaving " + session["current_game"])
@@ -130,20 +139,6 @@ def instruction():
     if "username" not in session:
         return redirect(url_for("login"))
     return "Instructions"
-
-
-@app.route("/pokemon")
-def pokemon():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    print("Chose pokemon (No paid)")
-    session["current_game"] = "pokemon"
-    if not session["paid"]:
-        return redirect(url_for("bet"))
-
-    print("Playing pokemon (Paid)")
-    session["paid"] = False
-    return "Playing Pokemon"
 
 
 if __name__ == "__main__":
