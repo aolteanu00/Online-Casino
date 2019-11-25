@@ -66,9 +66,18 @@ Finished writing game for Pokemon Versus. The biggest bug to fix now is a user g
 from browser. Code is very messy, missing comments, terrible variable names, will need to be fixed.
 
 MAWD -- 2019-11-25 09:21
-##HOME STRETCH PLAN
-  ###DUE 2019-11-27
+HOME STRETCH PLAN
+  DUE 2019-11-27
   - William- finish adding funds
   - Alex- finish to21 game
   - Devin - finish rick and morty game
   - Mo - combine all aspects and prepare for BOOTSTRAPPING 
+  
+  Features to CUT (if needed)
+  - MICROTRANSACTIONS
+  - a fourth game
+  
+  If finished
+  - more css
+  - microtransactions
+  - fourth game 
