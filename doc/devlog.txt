@@ -64,3 +64,11 @@ Finished logic for determining who wins in pokemon game and wrote tests (automat
 williamC -- 2019-11-23 13:36
 Finished writing game for Pokemon Versus. The biggest bug to fix now is a user going back and forward in history
 from browser. Code is very messy, missing comments, terrible variable names, will need to be fixed.
+
+MAWD -- 2019-11-25 09:21
+##HOME STRETCH PLAN
+  ###DUE 2019-11-27
+  - William- finish adding funds
+  - Alex- finish to21 game
+  - Devin - finish rick and morty game
+  - Mo - combine all aspects and prepare for BOOTSTRAPPING 
