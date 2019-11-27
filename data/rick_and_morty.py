@@ -32,7 +32,6 @@ def get_and_store_RandMcharacters():
         # Use a for loop to add every element to the database
         for i in result['results']:
             data['characters'].append({
-                'id' : i['id'],
                 'name' : i['name'],
                 'image_link' : i['image']
             })
@@ -59,7 +58,7 @@ def enter_database():
     with open('data/rickandmortydata.json') as json_file: # change this to not use database_query fucntion
         data = json.load(json_file)
         for i in data['characters']:
-            c.execute("INSERT INTO rickandmorty(id, full_name, image_link) VALUES (?, ?, ?)", (i['id'], i['name'], i['image_link']))
+            c.execute("INSERT INTO rickandmorty(full_name, image_link) VALUES (?, ?)", (i['name'], i['image_link']))
 
     database.commit()
     database.close()
