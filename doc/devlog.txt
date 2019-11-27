@@ -22,6 +22,12 @@ Added DEADLINES FOLLOW THEM PLEASE!!!!
 williamC -- 2019-11-18 21:33
 Code base: Finished writing the login system. Wrote the database, html, and backend logic. There is no bootstrap, just raw HTML.
 
+olteanuA -- 2019-11-19 1:20
+Created to21help.py and to21test.py which will store helper functions and facilitate the creation of To21
+  - created To21 database and 'gameinfo' table
+  - created several sql functions to facilitate the manipulation of 'gameinfo'
+  - attempted to begin incorporating my API although ran into several issues
+
 devinL -- 2019-11-19 8:50
 Started rick and morty database. Made a separate .py file to hold the helper function to cache the rick and morty api.
 
@@ -42,12 +48,23 @@ At this point, the program is able to display a random image of a character from
 williamC -- 2019-11-20 9:54
 Cached pokemon data (only to JSON not DB)
 
+olteanuA -- 2019-11-21 21:48
+FINALLY discovered reason behind codebreaking bug when attempting to work with my API
+I discovered that packages such as "Request" were being installed under python2.7 automatically rather than python3
+Created API helper functions within to21help.py
+Completed creation of all helper functions I believe will be necessary and thoroughly tested them
+
 MAWD -- 2019-11-20 18:11
-THe issue of ego hindering work exists in almost any field, but it seems more prevalent in the field of computer science. The article does a really good job explaioning how to avoid those problems using proper examples. We personally liked the interaction between Bill and Marilyn, mostly because Bill laughing at his own horrible code was relatable. 
+THe issue of ego hindering work exists in almost any field, but it seems more prevalent in the field of computer science. The article does a really good job explaioning how to avoid those problems using proper examples. We personally liked the interaction between Bill and Marilyn, mostly because Bill laughing at his own horrible code was relatable.
 THINGS WE WILL DO
   - The PM will make sure to assist any and all members with their part of the project, and the other members should also help eachother out even if they are working on different games.
   - We will make the environment as friendly as possible, especially for code review
-  - Each programmer will try to reach out and ask for help when needed 
+  - Each programmer will try to reach out and ask for help when needed
+
+olteanuA -- 2019-11-21 19:23
+Determined I needed to improve my database. Before it only stored 'deckid'(necessary for my API), 'userTotal'(user's current score in To21) and 'dealerTotal'(dealer's current score in To21)
+Now my table stores the number of cards drawn by the player and dealer as well, as I feel this is information the user deserves to have
+Created general skeletons of To21 app.py routes and corresponding html files
 
 williamC -- 2019-11-21 23:05
 Finished caching data and reading into DB (brought initialization time from 4s to .13s).
@@ -65,19 +82,32 @@ williamC -- 2019-11-23 13:36
 Finished writing game for Pokemon Versus. The biggest bug to fix now is a user going back and forward in history
 from browser. Code is very messy, missing comments, terrible variable names, will need to be fixed.
 
+olteanuA -- 2019-11-23 22:34
+Finished /to21 and /to21/initilize routes in app.py
+Finished corresponding html files to completed routes: to21home.html, to21start.html
+Finished properly linking all routes and html files
+All I have left to do is work out and incorporate the math/calculations behind To21. This should be easy because of the completion of previously mentioned helper functions
+
 MAWD -- 2019-11-25 09:21
 HOME STRETCH PLAN
   DUE 2019-11-27
   - William- finish adding funds
   - Alex- finish to21 game
   - Devin - finish rick and morty game
-  - Mo - combine all aspects and prepare for BOOTSTRAPPING 
-  
+  - Mo - combine all aspects and prepare for BOOTSTRAPPING
+
   Features to CUT (if needed)
   - MICROTRANSACTIONS
   - a fourth game
-  
+
   If finished
   - more css
   - microtransactions
-  - fourth game 
+  - fourth game
+
+olteanuA 2019-11-27 3:35
+Completed To21 as a standalone game (almost). Currently game-state is managed through hardcode within /to21/initialize
+William asked that instead I do so through the usage of sessions. This will most likely be done and completed in class tomorrow.
+The game looks basic as only fundamental and necessary aspects of the game has been incorporated
+Now I can focus on aesthetic and smaller features
+ 
