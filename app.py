@@ -242,8 +242,6 @@ def to21results():
     deckid = help.getdeckid()
     userCurrentAmount = help.getUserAmt()
     userNumCards = help.getUserNumCards()
-    # dealerCurrentAmount = help.getDealerAmt()
-    # dealerNumCards = help.getDealerNumCards()
     userTemp = 0
     dealerTemp = 0
     additionalCards = 0
