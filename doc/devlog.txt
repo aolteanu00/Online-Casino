@@ -64,3 +64,9 @@ Finished logic for determining who wins in pokemon game and wrote tests (automat
 williamC -- 2019-11-23 13:36
 Finished writing game for Pokemon Versus. The biggest bug to fix now is a user going back and forward in history
 from browser. Code is very messy, missing comments, terrible variable names, will need to be fixed.
+
+williamC -- 2019-11-24 15:14
+Cleaned up variable names and code logic. Also used Blueprints to fix
+
+williamC -- 2019-11-26 9:25
+Firefox has a feature where going back in history uses the cache page instead of asking the server to send info again. This caused a bug of user being able to play multiple games of same cards. This is fixed now.
