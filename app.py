@@ -10,12 +10,14 @@ import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
 from pokemon_game.routes import pokemon_game
+from rickandmorty_game.routes import rickandmorty_game
 import random
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 app.register_blueprint(pokemon_game)
+app.register_blueprint(rickandmorty_game)
 
 
 @app.route("/")
@@ -84,15 +86,6 @@ def game():
         return redirect(url_for(session["current_game"]))
     session["paid"] = False
     return render_template("game.html")
-
-
-@app.route("/rickandmorty")
-def rickandmortygame():
-    character_id = int(random.randrange(1, 494, 1))
-    character_info = database_query.rickandmorty_getinfo(character_id)
-    print(character_info)
-    # character_info is a 2-D array with [0][0] being the name and [0][1] being the image link
-    return render_template("rickandmorty.html", image = character_info[0][1])
 
 
 @app.route("/bet", methods=["GET"])
