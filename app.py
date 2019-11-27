@@ -10,6 +10,7 @@ import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
 from pokemon_game.routes import pokemon_game
+import to21help as help
 from rickandmorty_game.routes import rickandmorty_game
 import random
 
@@ -133,6 +134,162 @@ def instruction():
     if "username" not in session:
         return redirect(url_for("login"))
     return "Instructions"
+
+
+@app.route("/to21")
+def to21():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("to21home.html")
+
+
+#initializes database
+@app.route("/to21/initilize")
+def to21initilize():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    #if database already exists, delete it
+    command = "DROP TABLE IF EXISTS gameinfo;"
+    help.runsqlcommand(command)
+
+    #initialize database
+    help.createDB()
+    help.initializeDB()
+
+    return redirect(url_for("to21start"))
+
+
+@app.route("/to21/start")
+def to21start():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    #VARIABLES
+    deckid = help.getdeckid()
+    userStartAmount = help.drawCard(deckid) + help.drawCard(deckid)
+    dealerStartAmount = help.drawCard(deckid) + help.drawCard(deckid)
+
+    #deal to the user and dealer
+    command = "UPDATE gameinfo SET userTotal = '{}', dealerTotal = '{}';".format(userStartAmount, dealerStartAmount)
+    help.runsqlcommand(command)
+    command = "UPDATE gameinfo SET userNumCards = 2, dealerNumCards = 2;"
+    help.runsqlcommand(command)
+    userNumCards = help.getUserNumCards()
+    dealerNumCards = help.getDealerNumCards()
+
+    return render_template("to21start.html", USA = userStartAmount, UNUM = userNumCards, DSA = dealerStartAmount, DNUM = dealerNumCards, deckid = deckid)
+
+
+@app.route("/to21/live")
+def to21live():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    #VARIABLES
+    deckid = help.getdeckid()
+    userCurrentAmount = help.getUserAmt()
+    userNumCards = help.getUserNumCards()
+    dealerCurrentAmount = help.getDealerAmt()
+    dealerNumCards = help.getDealerNumCards()
+
+    return render_template("to21live.html", UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+
+
+@app.route("/to21/dealCard")
+def dealCard():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    #VARIABLES AND ADJUSTING DATABASE
+    deckid = help.getdeckid()
+    userCurrentAmount = help.getUserAmt()
+    numCards = help.getUserNumCards()
+    numCards += 1
+    newVal = help.drawCard(deckid)
+
+    #if user draws an ace
+    if newVal == 0:
+        if (userCurrentAmount + 10) < 21:
+            newVal = 11
+        else:
+            newVal = 1
+    newVal += userCurrentAmount
+    command = "UPDATE gameinfo SET userTotal = '{}', userNumCards = '{}';".format(newVal, numCards)
+    help.runsqlcommand(command)
+
+    #if the user exceeds 21 terminate game
+    if help.getUserAmt() > 21:
+        return redirect(url_for("to21results"))
+
+    return redirect(url_for("to21live"))
+
+
+@app.route("/to21/results")
+def to21results():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    #VARIABLES
+    deckid = help.getdeckid()
+    userCurrentAmount = help.getUserAmt()
+    userNumCards = help.getUserNumCards()
+    userTemp = 0
+    dealerTemp = 0
+    additionalCards = 0
+
+    #dealer "ai"
+    while help.getDealerAmt() < 18:
+        newVal = help.drawCard(deckid)
+        newVal += help.getDealerAmt()
+        numCards = help.getDealerNumCards()
+        numCards += 1
+        command = "UPDATE gameinfo SET dealerTotal = '{}', dealerNumCards = '{}';".format(newVal, numCards)
+        help.runsqlcommand(command)
+        additionalCards += 1
+    additionalCards = str(additionalCards)
+    dealerCurrentAmount = help.getDealerAmt()
+    dealerNumCards = help.getDealerNumCards()
+
+    #calculate automatic wins and losses
+    if userCurrentAmount > 21 and dealerCurrentAmount > 21:
+        tie = True
+        win = False
+        message = "Y'all both drew too high. You keep your money."
+        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+    if userCurrentAmount < 21 and dealerCurrentAmount > 21:
+        tie = False
+        win = True
+        message = "The dealer drew too high. Congrats!"
+        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+    if userCurrentAmount > 21 and dealerCurrentAmount < 21:
+        tie = False
+        win = False
+        message = "You drew too high. Ha!"
+        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+
+    #calulate win if both parties fall under 21
+    if userCurrentAmount <21:
+        userTemp = 21 - userCurrentAmount
+    if dealerCurrentAmount < 21:
+        dealerTemp = 21 - dealerCurrentAmount
+
+    if userTemp == dealerTemp:
+        tie = True
+        win = False
+        message = "Y'all tied. You keep your money"
+        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+    if userTemp < dealerTemp:
+        tie = False
+        win = True
+        message = "Congrats!"
+        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+    else:
+        tie = False
+        win = False
+        message = "Ha!"
+        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
 
 
 if __name__ == "__main__":
