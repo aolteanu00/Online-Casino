@@ -110,4 +110,8 @@ Completed To21 as a standalone game (almost). Currently game-state is managed th
 William asked that instead I do so through the usage of sessions. This will most likely be done and completed in class tomorrow.
 The game looks basic as only fundamental and necessary aspects of the game has been incorporated
 Now I can focus on aesthetic and smaller features
- 
+
+mohidulA 2019-11-27 10:49
+Updated database for games in the design docs
+changed some instructions for R&M and pokemon game
+Clarified the balance system (and the test user starts with MAWD$1000)
