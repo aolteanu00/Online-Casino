@@ -94,6 +94,9 @@ def pokemon_result():
     if len(request.form) != 1 or "pokemon_selected" not in request.form:
         return redirect(url_for(".pokemon"))
 
+    if ("game_state" not in session) or session["game_state"] != "selecting":
+        return redirect(url_for(".pokemon"))
+
     session["game_state"] = "result"
     user_selected_pokemon = get_pokemon(request.form["pokemon_selected"])
     # Make sure the pokemon selected is one that the user was given
