@@ -36,8 +36,8 @@ def enter_database():
     c = connection.cursor()
 
     now = datetime.now()
-    currency_last_updated = c.execute("SELECT last_updated FROM cache_time WHERE table_name = 'currency_rates'").fetchone()[0]
-    if currency_last_updated is None or (abs(currency_last_updated - now)).seconds / 3600 > 12:
+    currency_last_updated = c.execute("SELECT last_updated FROM cache_time WHERE table_name = 'currency_rates'").fetchone()
+    if currency_last_updated is None or (abs(currency_last_updated[0] - now)).seconds / 3600 > 12:
         # Have not stored currency or currency exchange rates are out of date (> 12 hours)
         print("Currency is out of date. Refreshing")
         get_and_store_exchanges()
