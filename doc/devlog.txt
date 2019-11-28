@@ -70,3 +70,7 @@ Cleaned up variable names and code logic. Also used Blueprints to fix
 
 williamC -- 2019-11-26 9:25
 Firefox has a feature where going back in history uses the cache page instead of asking the server to send info again. This caused a bug of user being able to play multiple games of same cards. This is fixed now.
+
+williamC -- 2019-11-26
+Removed all database binary files from master branch.
+Retrieve and store currency exchange rates.
