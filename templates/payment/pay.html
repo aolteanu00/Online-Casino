@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Payment</title>
+    </head>
+    <body>
+        <h1>Add MAWDollars</h1>
+        <form action="/pay/processed" method="POST">
+            <label>Card number:</label>
+            <input type="number" name="card_number" required/>
+            <br>
+            <label>Expiration month:</label>
+            <input type="number" name="month" placeholder="MM" min="0" max="12" required/>
+            <br>
+            <label>Expiration year:</label>
+            <input type="number" name="year" min="19" max="99" placeholder="YY" required/>
+            <br>
+            <label>CVV:</label>
+            <input type="number" name="cvv" min="0" max="999" required/>
+            <br>
+            <label>We will charge USD. Please enter WHOLE dollars only</label>
+            <br>
+            <input type="number" name="pay_amount" placeholder="Amount" required/>
+            <br>
+            <input type="submit" value="Get MAWDollars!!!"/>
+        </form>
+    </body>
+</html>
