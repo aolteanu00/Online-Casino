@@ -22,7 +22,15 @@ def get_pokemon(name: str) -> Pokemon:
 
 
 def get_four_random_pokemons() -> list:
-    return [get_random_pokemon().name for _ in range(0, 4)]
+    """
+    Player's cards cannot be repeated. However, computer and user may share the same pokemon(s).
+    :return:
+    """
+    random_pokemons = []
+    while len(random_pokemons) != 4:
+        random_pokemon = get_random_pokemon().name
+        if random_pokemon not in random_pokemons:
+            random_pokemons.append(random_pokemon)
 
 
 def user_balance_lost(user_pokemon: str, computer_pokemon: str, bet_amount) -> int:
