@@ -128,3 +128,5 @@ Clarified the balance system (and the test user starts with MAWD$1000)
 
 williamC -- 2019-11-28
 Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.
+Result page of pokemon will show how much was gain or lost.
+All pokemon choices are no unique to the player (user and computer can share the same pokemon, however)
