@@ -10,6 +10,7 @@ import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
 from pokemon_game.routes import pokemon_game
+from payments.routes import payment
 import to21help as help
 import random
 
@@ -17,6 +18,7 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 app.register_blueprint(pokemon_game)
+app.register_blueprint(payment)
 
 
 @app.route("/")
@@ -106,7 +108,7 @@ def bet():
 
     if "add_funds" in request.args:
         print("User is adding funds:")
-        return redirect(url_for("pay"))
+        return redirect(url_for("payment.pay"))
     elif "spending_amount" in request.args:
         print("User is spending: " + request.args["spending_amount"])
         new_balance = database_query.get_balance(session["username"]) - int(request.args["spending_amount"])
@@ -127,13 +129,6 @@ def bet():
         print("Request information for " + session["current_game"])
         return redirect(url_for("instruction"))
     return render_template("bet.html", game=session["current_game"])
-
-
-@app.route("/pay")
-def pay():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    return render_template("pay.html")
 
 
 @app.route("/instruction")

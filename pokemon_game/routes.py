@@ -94,6 +94,9 @@ def pokemon_result():
     if len(request.form) != 1 or "pokemon_selected" not in request.form:
         return redirect(url_for(".pokemon"))
 
+    if ("game_state" not in session) or session["game_state"] != "selecting":
+        return redirect(url_for(".pokemon"))
+
     session["game_state"] = "result"
     user_selected_pokemon = get_pokemon(request.form["pokemon_selected"])
     # Make sure the pokemon selected is one that the user was given
@@ -102,6 +105,10 @@ def pokemon_result():
         del session["game_state"]
         session["paid"] = False
         session["bet_amount"] = 0
+        del session["computer_selected_pokemon"]
+        del session["computer_pokemons"]
+        del session["user_pokemons"]
+        del session["current_game"]
         return "Nice try cheating, still took your money though"
     else:
         user_change_balance = user_balance_lost(user_selected_pokemon.name, session["computer_selected_pokemon"],
@@ -129,6 +136,9 @@ def pokemon_result():
     del session["game_state"]
     session["paid"] = False
     session["bet_amount"] = 0
+    del session["computer_selected_pokemon"]
+    del session["computer_pokemons"]
+    del session["user_pokemons"]
     del session["current_game"]
 
     return render_template("pokemon/result.html",

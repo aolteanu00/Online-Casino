@@ -41,5 +41,17 @@ half_damage_to TEXT,
 no_damage_to TEXT
 )""")
 
+c.execute("""
+CREATE TABLE IF NOT EXISTS cache_time(
+table_name TEXT PRIMARY KEY,
+last_updated TIMESTAMP
+)""")
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS currency_rates(
+name TEXT PRIMARY KEY,
+ratio REAL
+)""")
+
 db.commit()
 db.close()

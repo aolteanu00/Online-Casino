@@ -88,6 +88,9 @@ Finished corresponding html files to completed routes: to21home.html, to21start.
 Finished properly linking all routes and html files
 All I have left to do is work out and incorporate the math/calculations behind To21. This should be easy because of the completion of previously mentioned helper functions
 
+williamC -- 2019-11-24 15:14
+Cleaned up variable names and code logic. Also used Blueprints to fix
+
 MAWD -- 2019-11-25 09:21
 HOME STRETCH PLAN
   DUE 2019-11-27
@@ -105,6 +108,13 @@ HOME STRETCH PLAN
   - microtransactions
   - fourth game
 
+williamC -- 2019-11-26 9:25
+Firefox has a feature where going back in history uses the cache page instead of asking the server to send info again. This caused a bug of user being able to play multiple games of same cards. This is fixed now.
+
+williamC -- 2019-11-26
+Removed all database binary files from master branch.
+Retrieve and store currency exchange rates.
+
 olteanuA 2019-11-27 3:35
 Completed To21 as a standalone game (almost). Currently game-state is managed through hardcode within /to21/initialize
 William asked that instead I do so through the usage of sessions. This will most likely be done and completed in class tomorrow.
@@ -115,3 +125,6 @@ mohidulA 2019-11-27 10:49
 Updated database for games in the design docs
 changed some instructions for R&M and pokemon game
 Clarified the balance system (and the test user starts with MAWD$1000)
+
+williamC -- 2019-11-28
+Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.

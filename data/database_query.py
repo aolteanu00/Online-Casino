@@ -3,7 +3,7 @@ import atexit
 
 DB_FILE = "data/database.db"
 
-db = sqlite3.connect(DB_FILE, check_same_thread=False)
+db = sqlite3.connect(DB_FILE, check_same_thread=False, detect_types=sqlite3.PARSE_DECLTYPES)
 c = db.cursor()
 
 
@@ -51,6 +51,25 @@ def update_balance(username: str, new_balance: int):
 
 def get_balance(username: str) -> int:
     return c.execute("SELECT balance FROM users WHERE username = ?", (username,)).fetchone()[0]
+
+
+def currency_to_MAWDollars(amount: float, currency: str) -> int:
+    """
+    1 MAWDollar = $1 USD
+    User balance will NEVER contain cents, only whole dollars.
+    Rounding down to nearest integer.
+    """
+    ratio = c.execute("SELECT ratio FROM currency_rates WHERE name = ? ", (currency,)).fetchone()[0]
+    return int(amount / ratio)
+
+
+def MAWDollars_to_currency(amount: int, currency: str) -> float:
+    """
+    1 MAWDollar = $1 USD
+    Do no round down to nearest integer.
+    """
+    ratio = c.execute("SELECT ratio FROM currency_rates WHERE name = ? ", (currency,)).fetchone()[0]
+    return amount * ratio
 
 
 def close_db():
