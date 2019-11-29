@@ -74,3 +74,6 @@ Firefox has a feature where going back in history uses the cache page instead of
 williamC -- 2019-11-26
 Removed all database binary files from master branch.
 Retrieve and store currency exchange rates.
+
+williamC -- 2019-11-28
+Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.
