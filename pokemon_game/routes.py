@@ -116,15 +116,18 @@ def pokemon_result():
         user_current_balance = get_balance(session["username"])
         if user_change_balance == 0:
             winner_message = "Tie!"
+            balance_message = f"The {session['bet_amount']} MAWDollars you bet was returned"
             new_balance = user_current_balance + session["bet_amount"]
         elif user_change_balance > 0:
             winner_message = "You won!"
             # If user won, he/she gets back what was bet and what was won
             new_balance = user_current_balance + session["bet_amount"] + user_change_balance
+            balance_message = f"You won {user_change_balance}"
         else:
             winner_message = "You lost"
             # If user lost, he/she lost what was bet and what was lost
             new_balance = user_current_balance + user_change_balance
+            balance_message = f"You lost {-user_change_balance}"
 
         print("User old balance: {}\nUser new Balance: {}".format(user_current_balance, new_balance))
         update_balance(session["username"], new_balance)
@@ -146,4 +149,5 @@ def pokemon_result():
                            computer_selected_pokemon=computer_slected_pokemon,
                            user_pokemons=user_pokemons,
                            user_selected_pokemon=user_selected_pokemon,
-                           winner_message=winner_message)
+                           winner_message=winner_message,
+                           balance_message=balance_message)
