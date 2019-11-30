@@ -72,6 +72,10 @@ def MAWDollars_to_currency(amount: int, currency: str) -> float:
     return amount * ratio
 
 
+def get_supported_currencies() -> [str]:
+    return [currency[0] for currency in c.execute("SELECT name FROM currency_rates").fetchall()]
+
+
 def close_db():
     db.commit()
     db.close()

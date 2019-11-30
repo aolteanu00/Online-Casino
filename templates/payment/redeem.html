@@ -1,0 +1,35 @@
+<!--
+errors (list of str): Error messages from flash()
+currencies (list of str): Currencies supported
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Payout</title>
+    </head>
+    <body>
+        {% with errors = get_flashed_messages() %}
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endwith %}
+        <h1>Redeem MAWDollars</h1>
+        <form action="/redeem/processed" method="POST">
+            <label>Paypal Email Address</label>
+            <input type="email" name="email" required>
+            <br/>
+            <label>MAWDollars to withdraw. WHOLE NUMBERS only.</label>
+            <input type="number" name="amount" min="0">
+            <label>Currency</label>
+            <select name="currency">
+                {% for currency in currencies %}
+                <option value="{{ currency }}"> {{ currency }} </option>
+                {% endfor %}
+            </select>
+            <br/>
+            <input type="submit" value="Redeem!">
+        </form>
+    </body>
+</html>
