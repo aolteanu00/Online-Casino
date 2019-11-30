@@ -151,3 +151,14 @@ def pokemon_result():
                            user_selected_pokemon=user_selected_pokemon,
                            winner_message=winner_message,
                            balance_message=balance_message)
+
+@pokemon_game.route("/leave-pokemon")
+def leave_pokemon():
+    del session["game_state"]
+    session["paid"] = False
+    session["bet_amount"] = 0
+    del session["computer_selected_pokemon"]
+    del session["computer_pokemons"]
+    del session["user_pokemons"]
+    del session["current_game"]
+    return redirect(url_for("game"))

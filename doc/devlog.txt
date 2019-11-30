@@ -130,3 +130,8 @@ williamC -- 2019-11-28
 Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.
 Result page of pokemon will show how much was gain or lost.
 All pokemon choices are no unique to the player (user and computer can share the same pokemon, however)
+
+williamC -- 2019-11-29 23:34
+Added bootstrap to the project (templating). Remodeled the entire pokemon game (but not the betting page).
+Fixed bug of being able to change bet amount mid game.
+Added ability to leave a game. (Kinda uselss, might remove)
