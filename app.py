@@ -296,4 +296,5 @@ def to21results():
 
 if __name__ == "__main__":
     app.debug = True
+    app.jinja_env.globals.update(get_balance=lambda: database_query.get_balance(session["username"]))
     app.run()

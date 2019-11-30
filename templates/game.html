@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Games</title>
-    </head>
-    <body>
-        <form action="logout">
-            <input type="submit" value="logout">
-        </form>
-        <a href="/pokemon">Pokemon</a>
+{% extends 'template_with_nav.html' %}
 
-        <a href="/to21">To21</a>
-    </body>
-</html>
+{% block title %}
+Games
+{% endblock %}
+
+{% block body %}
+    <a href="/pokemon">Pokemon</a>
+
+    <a href="/to21">To21</a>
+{% endblock %}
