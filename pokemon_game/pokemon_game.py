@@ -32,6 +32,8 @@ def get_four_random_pokemons() -> list:
         if random_pokemon not in random_pokemons:
             random_pokemons.append(random_pokemon)
 
+    return random_pokemons
+
 
 def user_balance_lost(user_pokemon: str, computer_pokemon: str, bet_amount) -> int:
     """
