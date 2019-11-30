@@ -106,6 +106,10 @@ def bet():
     if "current_game" not in session:
         return redirect(url_for("game"))
 
+    # If user leaves midgame to bet page, we do not want to double charge
+    if session["paid"]:
+        return redirect(url_for(session["current_game"]))
+
     if "add_funds" in request.args:
         print("User is adding funds:")
         return redirect(url_for("payment.pay"))
