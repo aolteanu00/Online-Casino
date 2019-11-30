@@ -27,6 +27,9 @@ user_pokemons: List of namedtuple with fields: ["name", "number_types", "first_t
                 </form>
             {% endfor %}
         </div>
-        <h4>Note: Leaving this page will NOT return the amount you place bet on.</h4>
+        <form action="/leave-pokemon" method="GET">
+            <input class="btn btn-danger" type="submit" value="Leave Game">
+        </form>
+        Leaving this game will NOT return the amount you place bet on.
     </div>
 {% endblock %}
