@@ -10,6 +10,7 @@ import os, random
 from flask import Flask, session, render_template, redirect, url_for, request, flash
 from data import database_query
 from pokemon_game.routes import pokemon_game
+from payments.routes import payment
 import to21help as help
 from rickandmorty_game.routes import rickandmorty_game
 import random
@@ -18,8 +19,8 @@ app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 app.register_blueprint(pokemon_game)
+app.register_blueprint(payment)
 app.register_blueprint(rickandmorty_game)
-
 
 @app.route("/")
 def root():
@@ -97,9 +98,13 @@ def bet():
     if "current_game" not in session:
         return redirect(url_for("game"))
 
+    # If user leaves midgame to bet page, we do not want to double charge
+    if session["paid"]:
+        return redirect(url_for(session["current_game"]))
+
     if "add_funds" in request.args:
         print("User is adding funds:")
-        return redirect(url_for("pay"))
+        return redirect(url_for("payment.pay"))
     elif "spending_amount" in request.args:
         print("User is spending: " + request.args["spending_amount"])
         new_balance = database_query.get_balance(session["username"]) - int(request.args["spending_amount"])
@@ -122,17 +127,14 @@ def bet():
     return render_template("bet.html", game=session["current_game"])
 
 
-@app.route("/pay")
-def pay():
-    if "username" not in session:
-        return redirect(url_for("login"))
-    return render_template("pay.html")
-
-
 @app.route("/instruction")
 def instruction():
     if "username" not in session:
         return redirect(url_for("login"))
+
+    if session["current_game"] == "pokemon_game.pokemon":
+        return redirect(url_for("pokemon_game.pokemon_instructions"))
+
     return "Instructions"
 
 
@@ -294,4 +296,5 @@ def to21results():
 
 if __name__ == "__main__":
     app.debug = True
+    app.jinja_env.globals.update(get_balance=lambda: database_query.get_balance(session["username"]))
     app.run()

@@ -19,7 +19,8 @@ python data/database_builder.py
 echo -e "${GREEN}Seeding database${NC}"
 echo -e "${RED}This will take a long time depending on your internet connection and API server load${NC}"
 echo -e "Filling in pokemon data"
-python data/pokemonAPI.py
-
+python3 data/pokemonAPI.py
 echo -e "Filling in rick and morty data"
 python data/rick_and_morty.py
+echo -e "Filling in currency ratios data"
+python3 data/currencyExchangeAPI.py

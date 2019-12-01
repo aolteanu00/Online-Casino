@@ -94,6 +94,9 @@ def pokemon_result():
     if len(request.form) != 1 or "pokemon_selected" not in request.form:
         return redirect(url_for(".pokemon"))
 
+    if ("game_state" not in session) or session["game_state"] != "selecting":
+        return redirect(url_for(".pokemon"))
+
     session["game_state"] = "result"
     user_selected_pokemon = get_pokemon(request.form["pokemon_selected"])
     # Make sure the pokemon selected is one that the user was given
@@ -102,6 +105,10 @@ def pokemon_result():
         del session["game_state"]
         session["paid"] = False
         session["bet_amount"] = 0
+        del session["computer_selected_pokemon"]
+        del session["computer_pokemons"]
+        del session["user_pokemons"]
+        del session["current_game"]
         return "Nice try cheating, still took your money though"
     else:
         user_change_balance = user_balance_lost(user_selected_pokemon.name, session["computer_selected_pokemon"],
@@ -109,15 +116,18 @@ def pokemon_result():
         user_current_balance = get_balance(session["username"])
         if user_change_balance == 0:
             winner_message = "Tie!"
+            balance_message = f"The {session['bet_amount']} MAWDollars you bet was returned"
             new_balance = user_current_balance + session["bet_amount"]
         elif user_change_balance > 0:
             winner_message = "You won!"
             # If user won, he/she gets back what was bet and what was won
             new_balance = user_current_balance + session["bet_amount"] + user_change_balance
+            balance_message = f"You won {user_change_balance}"
         else:
             winner_message = "You lost"
             # If user lost, he/she lost what was bet and what was lost
             new_balance = user_current_balance + user_change_balance
+            balance_message = f"You lost {-user_change_balance}"
 
         print("User old balance: {}\nUser new Balance: {}".format(user_current_balance, new_balance))
         update_balance(session["username"], new_balance)
@@ -129,6 +139,9 @@ def pokemon_result():
     del session["game_state"]
     session["paid"] = False
     session["bet_amount"] = 0
+    del session["computer_selected_pokemon"]
+    del session["computer_pokemons"]
+    del session["user_pokemons"]
     del session["current_game"]
 
     return render_template("pokemon/result.html",
@@ -136,4 +149,22 @@ def pokemon_result():
                            computer_selected_pokemon=computer_slected_pokemon,
                            user_pokemons=user_pokemons,
                            user_selected_pokemon=user_selected_pokemon,
-                           winner_message=winner_message)
+                           winner_message=winner_message,
+                           balance_message=balance_message)
+
+
+@pokemon_game.route("/leave-pokemon")
+def leave_pokemon():
+    del session["game_state"]
+    session["paid"] = False
+    session["bet_amount"] = 0
+    del session["computer_selected_pokemon"]
+    del session["computer_pokemons"]
+    del session["user_pokemons"]
+    del session["current_game"]
+    return redirect(url_for("game"))
+
+
+@pokemon_game.route("/pokemon/instructions")
+def pokemon_instructions():
+    return render_template("pokemon/instructions.html");

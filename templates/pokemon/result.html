@@ -1,43 +1,69 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Playing Pokemon!</title>
-    </head>
-    <body>
-        <div style="display: flex; flex-direction: row">
-            {% for pokemon in computer_pokemons%}
-            <div style="background: red; width: 100px; height: 75px;">
-                {{ pokemon.name }}
-                {% if computer_selected_pokemon.name == pokemon.name %}
-                SELECTED
-                {% endif %}
-                {% if pokemon.number_types == 2%}
-                    {{ pokemon.first_type }}
-                    {{ pokemon.second_type }}
-                {% else %}
-                    {{ pokemon.first_type }}
-                {% endif %}
-            </div>
+{% extends "template.html" %}
+{% block title %}
+    Game Result!
+{% endblock %}
+{% block body %}
+    <div class="container-fluid align-middle">
+        <h2 class="text-center">Computer's Pokemon</h2>
+        <div class="row">
+            {% for pokemon in computer_pokemons %}
+                <div class="card col-sm {{ 'border border-success' if computer_selected_pokemon.name == pokemon.name }}">
+                    <img src="{{ pokemon.image }}" class="card-img-top">
+                    <div class="card-body text-center">
+                        {% if computer_selected_pokemon.name == pokemon.name %}
+                            <p class="text-success">{{ pokemon.name }}</p>
+                        {% else %}
+                            <p class="text-secondary">{{ pokemon.name }}</p>
+                        {% endif %}
+                        <br/>
+                        {% if pokemon.number_types == 2 %}
+                            <span class="badge badge-primary">{{ pokemon.first_type }}</span>
+                            <span class="badge badge-secondary">{{ pokemon.second_type }}</span>
+                        {% else %}
+                            <span class="badge badge-primary">{{ pokemon.first_type }}</span>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
         </div>
-        <hr>
-        <h1>{{ winner_message }}</h1>
-        <hr>
-        <div style="display: flex; flex-direction: row">
+    </div>
+
+    {% if "won" in winner_message %}
+        <h1 class="text-center text-success">{{ winner_message }}</h1>
+    {% elif "lost" in winner_message %}
+        <h1 class="text-center text-danger">{{ winner_message }}</h1>
+    {% else %}
+        <h1 class="text-center">{{ winner_message }}</h1>
+    {% endif %}
+    <h3 class="text-center">{{ balance_message }}</h3>
+    <div class="text-center">
+        <a href="/pokemon">Play again!</a>
+        <br>
+        <a href="/game">Play other games</a>
+    </div>
+
+    <div class="container-fluid align-middle">
+        <h2 class="text-center">Your Pokemon</h2>
+        <div class="row">
             {% for pokemon in user_pokemons %}
-            <div style="background: red; width: 100px; height: 75px;">
-                {{ pokemon.name }}
-                {% if user_selected_pokemon.name == pokemon.name %}
-                SELECTED
-                {% endif %}
-                {% if pokemon.number_types == 2%}
-                    {{ pokemon.first_type }}
-                    {{ pokemon.second_type }}
-                {% else %}
-                    {{ pokemon.first_type }}
-                {% endif %}
-            </div>
+                <div class="card col-sm {{ 'border border-success' if user_selected_pokemon.name == pokemon.name }}">
+                    <img src="{{ pokemon.image }}" class="card-img-top">
+                    <div class="card-body text-center">
+                        {% if user_selected_pokemon.name == pokemon.name %}
+                            <p class="text-success">{{ pokemon.name }}</p>
+                        {% else %}
+                            <p class="text-secondary">{{ pokemon.name }}</p>
+                        {% endif %}
+                        <br/>
+                        {% if pokemon.number_types == 2 %}
+                            <span class="badge badge-primary">{{ pokemon.first_type }}</span>
+                            <span class="badge badge-secondary">{{ pokemon.second_type }}</span>
+                        {% else %}
+                            <span class="badge badge-primary">{{ pokemon.first_type }}</span>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
         </div>
-    </body>
-</html>
+    </div>
+{% endblock %}

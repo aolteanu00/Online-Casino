@@ -1,0 +1,50 @@
+{% extends "template.html" %}
+{% block title %}
+    Pokemon Instructions!
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">How to play Pokemon Versus!</h1>
+
+        <h3>What is this game?</h3>
+        <p>Pokemon Versus is one of the three games where you can bet your MAWDollars against the computer. You pick a
+            pokemon and the computer randomly picks one (out of four). The pokemon then fight and the winner is
+            determined by type advantage</p>
+
+        <h3>How do I know type advantage?</h3>
+        <figure class="figure">
+            <img class="figure-img" src="https://upload.wikimedia.org/wikipedia/commons/9/97/Pokemon_Type_Chart.svg">
+            <figcaption class="figure-caption">Source: https://upload.wikimedia.org/wikipedia/commons/9/97/Pokemon_Type_Chart.svg</figcaption>
+            <ul>
+                <li>"1/2" means half effective (0.5x)</li>
+                <li>"2" means 2x effective</li>
+                <li>"0" means no damage done</li>
+                <li>White space means normal damage (1x)</li>
+            </ul>
+        </figure>
+
+        <h3>How do I know which pokemon wins?</h3>
+        This is best explained through an example. For example, let's say:
+        <div class="pl-3">You bet 10 MAWDollars and chose Paras, which is "bug" and "grass"</div>
+        <div class="pl-3">The computer chose Krabby, which is "water". Because Krabby only has one type, its secondary type will the primary type as well, which is "water"</div>
+        <br>
+        Each pokemon will then use its primary type to attack the other pokemon's primary and secondary type.
+        In this case:
+        <br>
+        <div class="pl-3">Krabby attacks Paras. Water is 1x to bug and 0.5x to grass. The total damage is the sum, which is 1.5</div>
+        <div class="pl-3">Paras attacks Krabby. Bug is 1x to water. The total damage is the sum, which is 2</div>
+        <div class="pl-3">Because the difference is 0.5, with you choosing the pokemon doing more damage, you won!</div>
+        <div class="pl-3">The difference wasn't that great, so you only won 1.5x the amount you bet, which is 15.</div>
+
+        <h3>How do I determine how much I win or lose?</h3>
+        If the difference is
+        <ul>
+            <li>0 (tie): The amount you bet is returned.</li>
+            <li>Between 0.5 and 1.5 inclusive (won): 1.5x the amount you bet is given to you.</li>
+            <li>Between -0.5 and -1.5 inclusive (lost): 0.5 the amount you bet is given back.</li>
+            <li>Greater than 1.5 (won): 2x the amount you bet is given to you.</li>
+            <li>Less than 1.5 (lost): Lost what you bet.</li>
+        </ul>
+
+    </div>
+{% endblock %}

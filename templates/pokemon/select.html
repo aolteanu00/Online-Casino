@@ -3,31 +3,33 @@ Parameters required:
 user_pokemons: List of namedtuple with fields: ["name", "number_types", "first_type", "second_type", "image"]
 -->
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Playing Pokemon!</title>
-    </head>
-    <body>
-        <div style="display: flex; flex-direction: row">
-            {% for cardNumber in range(0, 4)%}
-            <div style="background: red; width: 100px; height: 75px;">
-                {{ cardNumber }}
-            </div>
+{% extends "template.html" %}
+{% block title %}
+    Playing pokemon!
+{% endblock %}
+{% block body %}
+    <div class="container-fluid align-middle">
+        <h2 class="text-center">Select a Pokemon</h2>
+        <div class="row">
+            {% for pokemon in user_pokemons %}
+                <form action="/pokemon/result" method="POST" class="card col-sm">
+                    <img src="{{ pokemon.image }}" class="card-img-top">
+                    <div class="card-body text-center">
+                        <input type="submit" class="btn btn-primary" value="{{ pokemon.name }}" name="pokemon_selected">
+                        <br/>
+                        {% if pokemon.number_types == 2 %}
+                            <span class="badge badge-primary">{{ pokemon.first_type }}</span>
+                            <span class="badge badge-secondary">{{ pokemon.second_type }}</span>
+                        {% else %}
+                            <span class="badge badge-primary">{{ pokemon.first_type }}</span>
+                        {% endif %}
+                    </div>
+                </form>
             {% endfor %}
         </div>
-        <form action="/pokemon/result" method="POST">
-            {% for pokemon in user_pokemons %}
-            <input type="submit" style="background: cyan; width: 100px; height: 75px;" value={{pokemon.name}} name="pokemon_selected">
-                {{ pokemon.name }}
-                {% if pokemon.number_types == 2%}
-                    {{ pokemon.first_type }}
-                    {{ pokemon.second_type }}
-                {% else %}
-                    {{ pokemon.first_type }}
-                {% endif %}
-            </input>
-        {% endfor %}
+        <form action="/leave-pokemon" method="GET">
+            <input class="btn btn-danger" type="submit" value="Leave Game">
         </form>
-    </body>
-</html>
+        Leaving this game will NOT return the amount you place bet on.
+    </div>
+{% endblock %}
