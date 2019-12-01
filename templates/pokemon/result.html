@@ -7,11 +7,11 @@
         <h2 class="text-center">Computer's Pokemon</h2>
         <div class="row">
             {% for pokemon in computer_pokemons %}
-                <div class="card col-sm">
+                <div class="card col-sm {{ 'border border-success' if computer_selected_pokemon.name == pokemon.name }}">
                     <img src="{{ pokemon.image }}" class="card-img-top">
                     <div class="card-body text-center">
                         {% if computer_selected_pokemon.name == pokemon.name %}
-                            <p class="text-primary">{{ pokemon.name }}</p>
+                            <p class="text-success">{{ pokemon.name }}</p>
                         {% else %}
                             <p class="text-secondary">{{ pokemon.name }}</p>
                         {% endif %}
@@ -46,11 +46,11 @@
         <h2 class="text-center">Your Pokemon</h2>
         <div class="row">
             {% for pokemon in user_pokemons %}
-                <div class="card col-sm">
+                <div class="card col-sm {{ 'border border-success' if user_selected_pokemon.name == pokemon.name }}">
                     <img src="{{ pokemon.image }}" class="card-img-top">
                     <div class="card-body text-center">
                         {% if user_selected_pokemon.name == pokemon.name %}
-                            <p class="text-primary">{{ pokemon.name }}</p>
+                            <p class="text-success">{{ pokemon.name }}</p>
                         {% else %}
                             <p class="text-secondary">{{ pokemon.name }}</p>
                         {% endif %}

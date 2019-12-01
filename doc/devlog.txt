@@ -135,3 +135,6 @@ williamC -- 2019-11-29 23:34
 Added bootstrap to the project (templating). Remodeled the entire pokemon game (but not the betting page).
 Fixed bug of being able to change bet amount mid game.
 Added ability to leave a game. (Kinda uselss, might remove)
+
+williamC -- 2019-11-13 19:28
+Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
