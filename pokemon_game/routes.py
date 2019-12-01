@@ -152,6 +152,7 @@ def pokemon_result():
                            winner_message=winner_message,
                            balance_message=balance_message)
 
+
 @pokemon_game.route("/leave-pokemon")
 def leave_pokemon():
     del session["game_state"]
@@ -162,3 +163,8 @@ def leave_pokemon():
     del session["user_pokemons"]
     del session["current_game"]
     return redirect(url_for("game"))
+
+
+@pokemon_game.route("/pokemon/instructions")
+def pokemon_instructions():
+    return render_template("pokemon/instructions.html");

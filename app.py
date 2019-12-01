@@ -139,6 +139,10 @@ def bet():
 def instruction():
     if "username" not in session:
         return redirect(url_for("login"))
+
+    if session["current_game"] == "pokemon_game.pokemon":
+        return redirect(url_for("pokemon_game.pokemon_instructions"))
+
     return "Instructions"
 
 
