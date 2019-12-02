@@ -18,6 +18,9 @@ def get_character_image(name: str):
 def get_three_random_characters() -> list:
     return [get_random_character() for _ in range(0, 3)]
 
+def get_nine_random_characters() -> list:
+    return [get_random_character() for _ in range(0, 9)]
+
 def user_balance_lost_rickandmorty(user_choices: list, correct_ans: list, bet_amount: int) -> int:
     """
     Determine winner based on the number of correct answers from the questionaire.
