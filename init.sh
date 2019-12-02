@@ -14,12 +14,13 @@ echo -e "${GREEN}Install required packages to the environment${NC}"
 pip3 install -r requirements.txt
 
 echo -e "${GREEN}Creating database${NC}"
-python3 data/database_builder.py
+python data/database_builder.py
 
 echo -e "${GREEN}Seeding database${NC}"
 echo -e "${RED}This will take a long time depending on your internet connection and API server load${NC}"
 echo -e "Filling in pokemon data"
-python3 data/pokemonAPI.py
-
+python data/pokemonAPI.py
+echo -e "Filling in rick and morty data"
+python data/rick_and_morty.py
 echo -e "Filling in currency ratios data"
-python3 data/currencyExchangeAPI.py
+python data/currencyExchangeAPI.py

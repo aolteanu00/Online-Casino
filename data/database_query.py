@@ -20,14 +20,12 @@ def create_account(username: str, password: str):
     c.execute("INSERT INTO users(username, password, balance) VALUES (?, ?, 1000)", (username, password))
     db.commit()
 
-def rickandmortydb(id: int, full_name: str, image_link: str):
-    c.execute("INSERT INTO rickandmorty(id, full_name, image_link) VALUES (?, ?, ?)", (id, full_name, image_link))
-    db.commit()
 
-def rickandmorty_getinfo(id: int):
-    # this function takes a random id and returns a list containing the name and image link for a character from rick and morty
-    info = list(c.execute("SELECT full_name, image_link FROM rickandmorty WHERE id = ?;", (id, )))
-    return info
+def rickandmorty_getinfo() -> list:
+    """
+    :return: List of tuple of name and image link
+    """
+    return c.execute("SELECT * FROM rickandmorty").fetchall()
 
 
 def pokemon_type_info() -> list:
