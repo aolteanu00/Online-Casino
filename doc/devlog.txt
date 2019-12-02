@@ -138,3 +138,8 @@ Added ability to leave a game. (Kinda uselss, might remove)
 
 williamC -- 2019-11-13 19:28
 Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
+
+mohidulA -- 2019-11-13 17:50
+Updated the pokemon game rules in teh design doc
+Added the due date (oops)
+Changed parts of the to21 game
