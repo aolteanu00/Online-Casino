@@ -16,7 +16,7 @@ Session data updated
 
 import random
 from flask import Blueprint, session, render_template, redirect, url_for, request
-from rickandmorty_game.rickandmorty_game import get_three_random_characters, get_character_image, user_balance_lost_rickandmorty
+from rickandmorty_game.rickandmorty_game import get_three_random_characters, get_character_image, user_balance_lost_rickandmorty, get_nine_random_characters
 from data.database_query import update_balance, get_balance
 
 rickandmorty_game = Blueprint("rickandmorty_game", __name__)
@@ -72,5 +72,18 @@ def rickandmorty_select():
         session["correct_ans"] = characters
         session["user_choices"] = characters
     character_images = [get_character_image(name) for name in session["correct_ans"]]
+    # List of random filler characters
+    if "wrong_ans" not in session:
+        wrong_ans = get_nine_random_characters()
+        # Check if any value is the answer. Only checks once however but the chances of picking a invalid character is <1%.
+        for i in wrong_ans:
+            if i in session["correct_ans"]:
+                wrong_ans.remove(i)
+                wrong_ans.append(get_random_character())
+        session["wrong_ans"] = get_nine_random_characters()
     # print(character_images)
-    return render_template("rickandmorty/select.html", character_images = character_images)
+    if "correct_ans_index" not in session:
+        correct_ans_index = [random.randint(0, 3), random.randint(0, 3), random.randint(0, 3)]
+        session["correct_ans_index"] = correct_ans_index
+    print(session["correct_ans_index"])
+    return render_template("rickandmorty/select.html", correct_ans_index = session["correct_ans_index"], wrong_answers = session["wrong_ans"], answers = session["correct_ans"], character_images = character_images)
