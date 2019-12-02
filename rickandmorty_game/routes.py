@@ -87,3 +87,14 @@ def rickandmorty_select():
         session["correct_ans_index"] = correct_ans_index
     print(session["correct_ans_index"])
     return render_template("rickandmorty/select.html", correct_ans_index = session["correct_ans_index"], wrong_answers = session["wrong_ans"], answers = session["correct_ans"], character_images = character_images)
+
+@rickandmorty_game.route("/leave-rickandmorty")
+def leave_rickandmorty():
+    del session["game_state"]
+    session["paid"] = False
+    session["bet_amount"] = 0
+    del session["correct_ans"]
+    del session["correct_ans_index"]
+    del session["wrong_ans"]
+    del session["current_game"]
+    return redirect(url_for("game"))
