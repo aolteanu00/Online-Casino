@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Rick and Morty</title>
-    </head>
-    <body>
-      {% for character in character_images %}
-      <img src= "{{character}}""/>
-      {% endfor %}
-    </body>
+<head>
+  <title>Rick and Morty</title>
+</head>
+<body>
+  {% set index = namespace(value = 0) %}
+  {% set corr_index_list = namespace(value = 0) %}
+  {% set corr_index_loop = namespace(value = 0) %}
+  {% for character in character_images %}
+  <img src= "{{character}}"/><br>
+    {% for wrong in wrong_answers[index.value: index.value + 3] %}
+    1: {{correct_ans_index[corr_index_list]}}
+    2: {{corr_index_loop}}
+    {% if correct_ans_index[corr_index_list] == corr_index_loop %}
+      <div class="radio">
+        <label><input type="radio" name="answer">{{answers[corr_index_list]}}</label>
+      </div>
+      {% set corr_index_list.value = corr_index_list.value + 1 %}
+    {% else %}
+      {% set corr_index_loop.value = corr_index_loop.value + 1 %}
+      <div class="radio">
+        <label><input type="radio" name="wrong">{{wrong}}</label>
+      </div>
+    {% endif %}
+    {% set corr_index_loop = 0 %}
+    {% set index.value = index.value + 1 %}
+    {% endfor %}
+  {% endfor %}
+</body>
 </html>
