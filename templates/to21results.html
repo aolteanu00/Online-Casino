@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html>
+
+  <style type="text/css">
+    div{ border: 1px solid #000; }
+    body { background: green !important; }
+    a { text-decoration: underline !important;}
+  </style>
+
     <head>
         <title>Login</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     </head>
 
-
     <body>
-        <center><h1>Results</h1></center>
-
-        <p> Your current total: {{UCA}} </p>
-        <p> Number of cards you have drawn: {{UNUM}} </p>
-
-        <p> Dealer's current total: {{DCA}} </p>
-        <p> Number of cards the dealer has drawn: {{DNUM}} </p>
-
-        <h3> Win? {{win}}!</h3>
-
-        <h3>{{message}}</h3>
-        <h3> The dealer drew an additional {{ac}} card(s). </h3>
+        <br>
+        <div class="p-3 mb-2 bg-danger text-white" style="font-size:35px;"><center>Results</center></div>
+        <!-- USER INFO -->
+        <center><p class="text-white"> Your final total: {{UCA}} </p></center>
+        <!-- display user cards -->
+        <div class="container">
+          <div class="row">
+            {%for i in userCards%}
+            <div class="col-sm">
+              <center><p style="color:white;font-size:40px;"> {{i}} </p></center>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <br>
+        <!-- DEALER INFO -->
+        <center><p class="text-white"> Dealer final total: {{DCA}} </p></center>
+        <!-- display dealer cards -->
+        <div class="container">
+          <div class="row">
+            {%for i in dealerCards %}
+            <div class="col-sm">
+              <center><p style="color:white;font-size:40px;"> {{i}} </p></center>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <center><p class="text-white"> The dealer drew an additional {{ac}} card(s). </p></center>
+        <!-- RESULTS -->
+        <center><p style="color:white;font-size:40px;"> {{message}} <p></center>
+        <center><a href="/to21" class="text-white">Start A New Game</a></center>
+        <br>
+        <center><a href="/game" class="text-white">Back to games</a></center>
+        <br>
+        <br>
+        <div class="fixed-bottom"><div class="p-3 mb-2 bg-danger text-white" style="font-size:2px;"><center>MAWD takes no responsibility in any psychological damage dealt to the user. One plays these games at their own risk.</center></div></div>
     </body>
+
 </html>

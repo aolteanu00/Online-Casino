@@ -12,7 +12,6 @@ from data import database_query
 from pokemon_game.routes import pokemon_game
 from payments.routes import payment
 import to21help as help
-from rickandmorty_game.routes import rickandmorty_game
 import random
 
 app = Flask(__name__)
@@ -20,7 +19,7 @@ app.secret_key = os.urandom(32)
 
 app.register_blueprint(pokemon_game)
 app.register_blueprint(payment)
-app.register_blueprint(rickandmorty_game)
+
 
 @app.route("/")
 def root():
@@ -90,6 +89,15 @@ def game():
     return render_template("game.html")
 
 
+@app.route("/rickandmorty")
+def rickandmortygame():
+    character_id = int(random.randrange(1, 494, 1))
+    character_info = database_query.rickandmorty_getinfo(character_id)
+    print(character_info)
+    # character_info is a 2-D array with [0][0] being the name and [0][1] being the image link
+    return render_template("rickandmorty.html", image = character_info[0][1])
+
+
 @app.route("/bet", methods=["GET"])
 def bet():
     if "username" not in session:
@@ -116,6 +124,8 @@ def bet():
             database_query.update_balance(session["username"], new_balance)
             session["paid"] = True
             session["bet_amount"] = int(request.args["spending_amount"])
+            if session["current_game"] == "to21":
+                return redirect(url_for("to21initilize"))
             return redirect(url_for(session["current_game"]))
     elif "go_back" in request.args:
         print("Did not pay. Leaving " + session["current_game"])
@@ -135,6 +145,9 @@ def instruction():
     if session["current_game"] == "pokemon_game.pokemon":
         return redirect(url_for("pokemon_game.pokemon_instructions"))
 
+    if session["current_game"] == "to21":
+        return redirect(url_for("to21rules"))
+
     return "Instructions"
 
 
@@ -143,7 +156,21 @@ def to21():
     if "username" not in session:
         return redirect(url_for("login"))
 
+    #cannot play two games at once
+    if "current_game" in session and session["current_game"] != "to21":
+        print("Trying to play To21 but is already playing " + session["current_game"])
+        return redirect(url_for("game"))
+
+    session["current_game"] = "to21"
+
     return render_template("to21home.html")
+
+@app.route("/to21/rules")
+def to21rules():
+    if "username" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("to21rules.html")
 
 
 #initializes database
@@ -170,8 +197,18 @@ def to21start():
 
     #VARIABLES
     deckid = help.getdeckid()
-    userStartAmount = help.drawCard(deckid) + help.drawCard(deckid)
-    dealerStartAmount = help.drawCard(deckid) + help.drawCard(deckid)
+
+    session["userHand"] = []
+    session["dealerHand"] = []
+
+    session["userHand"].append(help.drawCard(deckid))
+    session["userHand"].append(help.drawCard(deckid))
+
+    session["dealerHand"].append(help.drawCard(deckid))
+    session["dealerHand"].append(help.drawCard(deckid))
+
+    userStartAmount = session["userHand"][0] + session["userHand"][1]
+    dealerStartAmount = session["dealerHand"][0] + session["dealerHand"][1]
 
     #deal to the user and dealer
     command = "UPDATE gameinfo SET userTotal = '{}', dealerTotal = '{}';".format(userStartAmount, dealerStartAmount)
@@ -181,7 +218,7 @@ def to21start():
     userNumCards = help.getUserNumCards()
     dealerNumCards = help.getDealerNumCards()
 
-    return render_template("to21start.html", USA = userStartAmount, UNUM = userNumCards, DSA = dealerStartAmount, DNUM = dealerNumCards, deckid = deckid)
+    return render_template("to21start.html", USA = userStartAmount, DSA = dealerStartAmount)
 
 
 @app.route("/to21/live")
@@ -189,14 +226,14 @@ def to21live():
     if "username" not in session:
         return redirect(url_for("login"))
 
+    print("we are in live")
+    print(session["userHand"])
     #VARIABLES
     deckid = help.getdeckid()
     userCurrentAmount = help.getUserAmt()
-    userNumCards = help.getUserNumCards()
     dealerCurrentAmount = help.getDealerAmt()
-    dealerNumCards = help.getDealerNumCards()
 
-    return render_template("to21live.html", UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+    return render_template("to21live.html", dealerCards = session["dealerHand"], UCA = userCurrentAmount, DCA = dealerCurrentAmount)
 
 
 @app.route("/to21/dealCard")
@@ -211,20 +248,29 @@ def dealCard():
     numCards += 1
     newVal = help.drawCard(deckid)
 
+    print(session["userHand"])
+    print("hello")
+
     #if user draws an ace
-    if newVal == 0:
-        if (userCurrentAmount + 10) < 21:
+    if newVal == 1:
+        if (userCurrentAmount + 10) <= 21:
             newVal = 11
         else:
             newVal = 1
+    dog = session["userHand"][:]
+    dog.append(newVal)
+    session["userHand"] = dog
     newVal += userCurrentAmount
+
     command = "UPDATE gameinfo SET userTotal = '{}', userNumCards = '{}';".format(newVal, numCards)
     help.runsqlcommand(command)
+
 
     #if the user exceeds 21 terminate game
     if help.getUserAmt() > 21:
         return redirect(url_for("to21results"))
 
+    print(session["userHand"])
     return redirect(url_for("to21live"))
 
 
@@ -232,6 +278,10 @@ def dealCard():
 def to21results():
     if "username" not in session:
         return redirect(url_for("login"))
+
+    del session["current_game"]
+    session["paid"] = False
+
 
     #VARIABLES
     deckid = help.getdeckid()
@@ -244,6 +294,7 @@ def to21results():
     #dealer "ai"
     while help.getDealerAmt() < 18:
         newVal = help.drawCard(deckid)
+        session["dealerHand"].append(newVal)
         newVal += help.getDealerAmt()
         numCards = help.getDealerNumCards()
         numCards += 1
@@ -254,44 +305,82 @@ def to21results():
     dealerCurrentAmount = help.getDealerAmt()
     dealerNumCards = help.getDealerNumCards()
 
-    #calculate automatic wins and losses
+    #CALCULATE AUTOMATIC WINS AND LOSSES
+    #if user and dealer exceed 21
     if userCurrentAmount > 21 and dealerCurrentAmount > 21:
-        tie = True
-        win = False
-        message = "Y'all both drew too high. You keep your money."
-        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
-    if userCurrentAmount < 21 and dealerCurrentAmount > 21:
-        tie = False
-        win = True
-        message = "The dealer drew too high. Congrats!"
-        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
-    if userCurrentAmount > 21 and dealerCurrentAmount < 21:
-        tie = False
-        win = False
-        message = "You drew too high. Ha!"
-        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+        message = "Y'all tied! Everyone keeps their MAWDollars."
 
-    #calulate win if both parties fall under 21
+        current_balance = database_query.get_balance(session["username"])
+        new_balance = current_balance + session["bet_amount"]
+        database_query.update_balance(session["username"], new_balance)
+
+        print("both parties over 21")
+        return render_template("to21results.html", userCards = session["userHand"], dealerCards = session["dealerHand"], ac = additionalCards, message = message, UCA = userCurrentAmount, DCA = dealerCurrentAmount)
+
+    #if dealer exceeds 21
+    if userCurrentAmount <= 21 and dealerCurrentAmount > 21:
+        message = "You won and doubled your wager!"
+
+        current_balance = database_query.get_balance(session["username"])
+        new_balance = current_balance + session["bet_amount"] + session["bet_amount"]
+        database_query.update_balance(session["username"], new_balance)
+
+        print("dealer over 21")
+        return render_template("to21results.html", userCards = session["userHand"], dealerCards = session["dealerHand"], ac = additionalCards, message = message, UCA = userCurrentAmount, DCA = dealerCurrentAmount)
+
+    #if user exceeds 21
+    if userCurrentAmount > 21 and dealerCurrentAmount <= 21:
+        message = "You lost the game and your wager!"
+
+        current_balance = database_query.get_balance(session["username"])
+        bet_amount = session["bet_amount"]
+        new_balance = current_balance
+        database_query.update_balance(session["username"], new_balance)
+
+        print("user over 21")
+        return render_template("to21results.html", userCards = session["userHand"], dealerCards = session["dealerHand"], ac = additionalCards, message = message,  UCA = userCurrentAmount, DCA = dealerCurrentAmount)
+
+    #CALCULATE IF BOTH PARTIES FALL UNDER 21
     if userCurrentAmount <21:
         userTemp = 21 - userCurrentAmount
     if dealerCurrentAmount < 21:
         dealerTemp = 21 - dealerCurrentAmount
 
+    #simple tie
     if userTemp == dealerTemp:
-        tie = True
-        win = False
-        message = "Y'all tied. You keep your money"
-        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+        message = "Y'all tied! Everyone keeps their MAWDollars."
+
+        current_balance = database_query.get_balance(session["username"])
+        bet_amount = session["bet_amount"]
+        new_balance = current_balance + bet_amount
+        database_query.update_balance(session["username"], new_balance)
+
+        print("tie, same score")
+        return render_template("to21results.html", userCards = session["userHand"], dealerCards = session["dealerHand"], ac = additionalCards, message = message,  UCA = userCurrentAmount,  DCA = dealerCurrentAmount)
+
+    #user wins
     if userTemp < dealerTemp:
-        tie = False
-        win = True
-        message = "Congrats!"
-        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+        message = "You won and doubled your wager!"
+
+        current_balance = database_query.get_balance(session["username"])
+        bet_amount = session["bet_amount"]
+        new_balance = current_balance + bet_amount + bet_amount
+        database_query.update_balance(session["username"], new_balance)
+
+        print("user wins")
+        return render_template("to21results.html", userCards = session["userHand"], dealerCards = session["dealerHand"], ac = additionalCards, message = message,  UCA = userCurrentAmount, DCA = dealerCurrentAmount)
+
+    #dealer wins
     else:
-        tie = False
-        win = False
-        message = "Ha!"
-        return render_template("to21results.html", ac = additionalCards, message = message, tie = tie, win = win,  UCA = userCurrentAmount, UNUM = userNumCards, DCA = dealerCurrentAmount, DNUM = dealerNumCards, deckid = deckid)
+        message = "You lost the game and your wager!"
+
+        current_balance = database_query.get_balance(session["username"])
+        bet_amount = session["bet_amount"]
+        new_balance = current_balance
+        database_query.update_balance(session["username"], new_balance)
+
+        print("dealer wins")
+        return render_template("to21results.html", userCards = session["userHand"], dealerCards = session["dealerHand"], ac = additionalCards, message = message,  UCA = userCurrentAmount, DCA = dealerCurrentAmount)
 
 
 if __name__ == "__main__":
