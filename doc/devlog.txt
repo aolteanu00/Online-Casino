@@ -177,5 +177,5 @@ Further polished bootstrap and html to make To21 look even better. I keep coming
 Incorporated images in game.html to make it look cooler
 
 caoW -- 2019-12-03 16:45
-Finished the README.md (how to set up the python environment and run the program)
+Finished the README.md (how to set up the python environment and run the program. Removed init.sh)
 Added a back button to the instruction pages

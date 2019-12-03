@@ -55,5 +55,7 @@ Our website is a collection of top-tier, big-brain, and purely skill based games
 7. Start the web server by running:
     ```bash
     python3 app.py
+    # if this doesn't work, try running
+    python app.py
     ```
 8. Open a web browser and type the following into the address "127.0.0.1:5000"
