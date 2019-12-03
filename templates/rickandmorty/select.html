@@ -11,8 +11,8 @@
   {{character}}
   <img src= "{{character}}"/><br>
     {% for wrong in wrong_answers[index.value: index.value + 3] %}
-    1: {{correct_ans_index[corr_index_list]}}
-    2: {{corr_index_loop}}
+    <!-- 1: {{correct_ans_index[corr_index_list]}}
+    2: {{corr_index_loop}} -->
     {% if correct_ans_index[corr_index_list] == corr_index_loop %}
       <div class="radio">
         <label><input type="radio" name="answer">{{answers[corr_index_list]}}</label>
@@ -28,5 +28,11 @@
     {% set index.value = index.value + 1 %}
     {% endfor %}
   {% endfor %}
+</div>
+<form action="/leave-rickandmorty" method="GET">
+    <input class="btn btn-danger" type="submit" value="Leave Game">
+</form>
+Leaving this game will NOT return the amount you place bet on.
+</div>
 </body>
 </html>
