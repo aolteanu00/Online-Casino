@@ -201,24 +201,44 @@ def to21start():
     session["userHand"] = []
     session["dealerHand"] = []
 
-    session["userHand"].append(help.drawCard(deckid))
-    session["userHand"].append(help.drawCard(deckid))
+    ucd1 = help.drawCard(deckid)
+    ucv1 = help.getValue(ucd1)
+    print(ucv1)
+    uci1 = help.getImage(ucd1)
+    ucd2 = help.drawCard(deckid)
+    ucv2 = help.getValue(ucd2)
+    print(ucv2)
+    uci2 = help.getImage(ucd2)
+    usa = ucv1 + ucv2
 
-    session["dealerHand"].append(help.drawCard(deckid))
-    session["dealerHand"].append(help.drawCard(deckid))
+    dcd1 = help.drawCard(deckid)
+    dcv1 = help.getValue(dcd1)
+    print(dcv1)
+    dci1 = help.getImage(dcd1)
+    dcd2 = help.drawCard(deckid)
+    dcv2 = help.getValue(dcd2)
+    print(dcv2)
+    dci2 = help.getImage(dcd2)
+    dsa = dcv1 + dcv2
 
-    userStartAmount = session["userHand"][0] + session["userHand"][1]
-    dealerStartAmount = session["dealerHand"][0] + session["dealerHand"][1]
+    session["userHand"].append(uci1)
+    session["userHand"].append(uci2)
+
+    session["dealerHand"].append(dci1)
+    session["dealerHand"].append(dci2)
+
+    #userStartAmount = session["userHand"][0] + session["userHand"][1]
+    #dealerStartAmount = session["dealerHand"][0] + session["dealerHand"][1]
 
     #deal to the user and dealer
-    command = "UPDATE gameinfo SET userTotal = '{}', dealerTotal = '{}';".format(userStartAmount, dealerStartAmount)
+    command = "UPDATE gameinfo SET userTotal = '{}', dealerTotal = '{}';".format(usa, dsa)
     help.runsqlcommand(command)
     command = "UPDATE gameinfo SET userNumCards = 2, dealerNumCards = 2;"
     help.runsqlcommand(command)
     userNumCards = help.getUserNumCards()
     dealerNumCards = help.getDealerNumCards()
 
-    return render_template("to21start.html", USA = userStartAmount, DSA = dealerStartAmount)
+    return render_template("to21start.html", USA = usa, DSA = dsa)
 
 
 @app.route("/to21/live")
@@ -246,7 +266,8 @@ def dealCard():
     userCurrentAmount = help.getUserAmt()
     numCards = help.getUserNumCards()
     numCards += 1
-    newVal = help.drawCard(deckid)
+    cardData = help.drawCard(deckid)
+    newVal = help.getValue(cardData)
 
     print(session["userHand"])
     print("hello")
@@ -257,9 +278,11 @@ def dealCard():
             newVal = 11
         else:
             newVal = 1
+
     dog = session["userHand"][:]
-    dog.append(newVal)
+    dog.append(help.getImage(cardData))
     session["userHand"] = dog
+
     newVal += userCurrentAmount
 
     command = "UPDATE gameinfo SET userTotal = '{}', userNumCards = '{}';".format(newVal, numCards)
@@ -293,8 +316,16 @@ def to21results():
 
     #dealer "ai"
     while help.getDealerAmt() < 18:
-        newVal = help.drawCard(deckid)
-        session["dealerHand"].append(newVal)
+        cardData = help.drawCard(deckid)
+        cardValue = help.getValue(cardData)
+        cardImage = help.getImage(cardData)
+        newVal = cardValue
+        if newVal == 1:
+            if (userCurrentAmount + 10) <= 21:
+                newVal = 11
+            else:
+                newVal = 1
+        session["dealerHand"].append(cardImage)
         newVal += help.getDealerAmt()
         numCards = help.getDealerNumCards()
         numCards += 1
