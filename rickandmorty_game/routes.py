@@ -16,7 +16,7 @@ Session data updated
 
 import random
 from flask import Blueprint, session, render_template, redirect, url_for, request
-from rickandmorty_game.rickandmorty_game import get_three_random_characters, get_character_image, user_balance_lost_rickandmorty, get_nine_random_characters
+from rickandmorty_game.rickandmorty_game import get_three_random_characters, get_character_image, get_random_character, user_balance_lost_rickandmorty, get_nine_random_characters
 from data.database_query import update_balance, get_balance
 
 rickandmorty_game = Blueprint("rickandmorty_game", __name__)
@@ -82,6 +82,8 @@ def rickandmorty_select():
                 wrong_ans.append(get_random_character())
         session["wrong_ans"] = get_nine_random_characters()
     # print(character_images)
+    # print(session["wrong_ans"])
+    # print(session["correct_ans"])
     if "correct_ans_index" not in session:
         correct_ans_index = [random.randint(0, 3), random.randint(0, 3), random.randint(0, 3)]
         session["correct_ans_index"] = correct_ans_index

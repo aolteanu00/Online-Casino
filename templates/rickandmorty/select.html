@@ -8,6 +8,7 @@
   {% set corr_index_list = namespace(value = 0) %}
   {% set corr_index_loop = namespace(value = 0) %}
   {% for character in character_images %}
+  {{character}}
   <img src= "{{character}}"/><br>
     {% for wrong in wrong_answers[index.value: index.value + 3] %}
     1: {{correct_ans_index[corr_index_list]}}
