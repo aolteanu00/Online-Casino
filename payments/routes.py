@@ -50,7 +50,7 @@ def redeem_processed():
         requested_MAWDollars = int(request.form["amount"])
         current_balance = get_balance(session["username"])
         if current_balance < requested_MAWDollars:
-            flash(f"You do not have enough MAWDollars. (Requested{request.form['amount']}. Have {current_balance})")
+            flash(f"You do not have enough MAWDollars. (Requested {request.form['amount']} MAWDollar(s). Have {current_balance} MAWDollar(s))")
             return redirect(url_for(".redeem"))
         else:
             update_balance(session["username"], get_balance(session["username"]) - requested_MAWDollars)

@@ -8,14 +8,14 @@ Login
     {% with errors = get_flashed_messages() %}
         {{ errors[0] }}
     {% endwith %}
-    <form>
+    <form method="POST">
         <label>Username</label>
-        <input type="text" name="username">
+        <input type="text" name="username" required>
         <br/>
         <label>Password</label>
-        <input type="text" name="password">
+        <input type="password" name="password" required>
         <br/>
-        <input type="Submit" value="Submit"/>
+        <input type="Submit" value="Submit" required/>
         <br/>
         <a href="/create-account">Create An Account</a>
     </form>

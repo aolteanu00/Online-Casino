@@ -2,34 +2,41 @@
 errors (list of str): Error messages from flash()
 currencies (list of str): Currencies supported
 -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Payout</title>
-    </head>
-    <body>
-        {% with errors = get_flashed_messages() %}
-            <ul>
-                {% for error in errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endwith %}
-        <h1>Redeem MAWDollars</h1>
-        <form action="/redeem/processed" method="POST">
+{% extends "template_with_nav.html" %}
+{% block title %}
+    Payment
+{% endblock %}
+{% block body %}
+    {% with errors = get_flashed_messages() %}
+        <ul>
+            {% for error in errors %}
+                <li class="text-danger">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endwith %}
+    <h1 class="text-center">Redeem MAWDollars</h1>
+    <form action="/redeem/processed" method="POST" class="container-fluid">
+        <div class="mb-3">
             <label>Paypal Email Address</label>
-            <input type="email" name="email" required>
-            <br/>
+            <input class="form-control" type="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
             <label>MAWDollars to withdraw. WHOLE NUMBERS only.</label>
-            <input type="number" name="amount" min="0">
+            <input class="form-control" type="number" name="amount" min="0">
+        </div>
+
+        <div class="mb-3">
             <label>Currency</label>
-            <select name="currency">
+            <select class="form-control" name="currency">
                 {% for currency in currencies %}
-                <option value="{{ currency }}"> {{ currency }} </option>
+                    <option value="{{ currency }}"> {{ currency }} </option>
                 {% endfor %}
             </select>
-            <br/>
-            <input type="submit" value="Redeem!">
-        </form>
-    </body>
-</html>
+        </div>
+
+        <div class="mb-3">
+            <input class="btn btn-success" type="submit" value="Redeem!">
+        </div>
+    </form>
+{% endblock %}

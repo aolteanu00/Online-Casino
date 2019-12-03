@@ -29,12 +29,12 @@ def root():
         return redirect(url_for("login"))
 
 
-@app.route("/login", methods=["GET"])
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    if len(request.args) == 2:
+    if len(request.form) == 2:
         # User entered login information
-        username: str = request.args["username"]
-        password: str = request.args["password"]
+        username: str = request.form["username"]
+        password: str = request.form["password"]
 
         if database_query.is_valid_login(username, password):
             session["username"] = username
@@ -46,13 +46,13 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/create-account", methods=["GET"])
+@app.route("/create-account", methods=["GET", "POST"])
 def create_account():
-    if len(request.args) == 3:
+    if len(request.form) == 3:
         # User entered create account information
-        username: str = request.args["username"]
-        password: str = request.args["password"]
-        password_repeat: str = request.args["password_repeat"]
+        username: str = request.form["username"]
+        password: str = request.form["password"]
+        password_repeat: str = request.form["password_repeat"]
 
         if password != password_repeat:
             flash("Passwords do not match")
