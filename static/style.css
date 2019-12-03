@@ -1,0 +1,5 @@
+.play_instructions {
+    position: fixed !important;
+    bottom: 5em !important;
+    right: 5em !important;
+}
