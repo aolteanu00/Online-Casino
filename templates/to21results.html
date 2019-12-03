@@ -2,7 +2,6 @@
 <html>
 
   <style type="text/css">
-    div{ border: 1px solid #000; }
     body { background: green !important; }
     a { text-decoration: underline !important;}
   </style>
@@ -16,17 +15,21 @@
         <br>
         <div class="p-3 mb-2 bg-danger text-white" style="font-size:35px;"><center>Results</center></div>
         <!-- USER INFO -->
+        <br>
         <center><p class="text-white"> Your final total: {{UCA}} </p></center>
         <!-- display user cards -->
         <div class="container">
           <div class="row">
             {%for i in userCards%}
             <div class="col-sm">
-              <center><p style="color:white;font-size:40px;"> {{i}} </p></center>
+              <center><center><img src="{{i}}"</p></center></center>
             </div>
             {% endfor %}
           </div>
         </div>
+        <br>
+        <br>
+        <br>
         <br>
         <!-- DEALER INFO -->
         <center><p class="text-white"> Dealer final total: {{DCA}} </p></center>
@@ -35,20 +38,23 @@
           <div class="row">
             {%for i in dealerCards %}
             <div class="col-sm">
-              <center><p style="color:white;font-size:40px;"> {{i}} </p></center>
+              <center><center><img src="{{i}}"</p></center></center>
             </div>
             {% endfor %}
           </div>
         </div>
         <center><p class="text-white"> The dealer drew an additional {{ac}} card(s). </p></center>
         <!-- RESULTS -->
+        <br>
+        <br>
         <center><p style="color:white;font-size:40px;"> {{message}} <p></center>
+        <br>
         <center><a href="/to21" class="text-white">Start A New Game</a></center>
         <br>
         <center><a href="/game" class="text-white">Back to games</a></center>
         <br>
         <br>
-        <div class="fixed-bottom"><div class="p-3 mb-2 bg-danger text-white" style="font-size:2px;"><center>MAWD takes no responsibility in any psychological damage dealt to the user. One plays these games at their own risk.</center></div></div>
+        <div class="bottom"><div class="p-3 mb-2 bg-danger text-white" style="font-size:2px;"><center>MAWD takes no responsibility in any psychological damage dealt to the user. One plays these games at their own risk.</center></div></div>
     </body>
 
 </html>

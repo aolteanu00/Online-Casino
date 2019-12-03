@@ -2,7 +2,6 @@
 <html>
 
   <style type="text/css">
-    div{ border: 1px solid #000; }
     body { background: green !important; }
     a { text-decoration: underline !important;}
   </style>
@@ -21,7 +20,7 @@
       <div class="row">
         {%for i in session["userHand"]%}
         <div class="col-sm">
-          <center><p style="color:white;font-size:40px;"> {{i}} </p></center>
+          <center><img src="{{i}}"</p></center>
         </div>
         {% endfor %}
       </div>
@@ -34,7 +33,7 @@
     <div class="container">
       <div class="row">
         <div class="col-sm">
-          <center><p style="color:white;font-size:40px;"> {{dealerCards[0]}} </p></center>
+          <center><img src="{{dealerCards[0]}}"</p></center>
         </div>
         <div class="col-sm">
           <center><p style="color:white;font-size:40px;"> ??? </p>
@@ -46,7 +45,7 @@
      <br>
      <center><a href="/to21/results" class="text-white">Stand</a></center>
      <br>
-     <div class="fixed-bottom"><div class="p-3 mb-2 bg-danger text-white" style="font-size:2px;"><center>MAWD takes no responsibility in any psychological damage dealt to the user. One plays these games at their own risk.</center></div></div>
+     <div class="bottom"><div class="p-3 mb-2 bg-danger text-white" style="font-size:2px;"><center>MAWD takes no responsibility in any psychological damage dealt to the user. One plays these games at their own risk.</center></div></div>
     </body>
 
 </html>

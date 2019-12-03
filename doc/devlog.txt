@@ -168,3 +168,8 @@ olteanuA -- 2019-12-03 3:45
 Made final bootstrap modifications to all To21 html files in order to achieve desired aesthetic result
 Made final tweaks to To21 calculation algorithms and fixed bugs
 Completed final code polish for To21 game
+
+olteanuA -- 2019--12-03 15:54
+Reworked code to allow the display of physical card images
+Further polished bootstrap and html to make To21 look even better. I keep coming up with new ideas.
+Incorporated images in game.html to make it look cooler

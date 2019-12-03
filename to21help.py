@@ -85,11 +85,27 @@ def createDeck():
 
 
 #draw a card from a deck given its id
+# def drawCard(deckid):
+#     request = Request("https://deckofcardsapi.com/api/deck/{id}/draw/?count=1".format(id = deckid), headers=headers)
+#     response = urlopen(request).read()
+#     data = json.loads(response)
+#     temp = data['cards']
+#     value = temp[0]['value']
+#     if value == "KING" or value == "QUEEN" or value == "JACK":
+#         return 10
+#     if value == "ACE":
+#         return 1 #decide value of ace during game
+#     else:
+#         return int(value)
+
 def drawCard(deckid):
     request = Request("https://deckofcardsapi.com/api/deck/{id}/draw/?count=1".format(id = deckid), headers=headers)
     response = urlopen(request).read()
     data = json.loads(response)
-    temp = data['cards']
+    return data
+
+def getValue(deckData):
+    temp = deckData['cards']
     value = temp[0]['value']
     if value == "KING" or value == "QUEEN" or value == "JACK":
         return 10
@@ -97,3 +113,8 @@ def drawCard(deckid):
         return 1 #decide value of ace during game
     else:
         return int(value)
+
+def getImage(deckData):
+    temp = deckData['cards']
+    image = temp[0]['image']
+    return image
