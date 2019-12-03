@@ -16,6 +16,7 @@ username TEXT PRIMARY KEY,
 password TEXT,
 balance INTEGER
 )""")
+c.execute("INSERT INTO users VALUES('alex', '123', 0)")
 
 c.execute("""
 CREATE TABLE IF NOT EXISTS rickandmorty(
