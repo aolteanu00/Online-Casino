@@ -52,6 +52,6 @@ def enter_database():
     connection.close()
 
 
-if __name__ == "__main__":
+def initialize():
     enter_database()
     #get_and_store_exchanges()
