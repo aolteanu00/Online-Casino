@@ -64,5 +64,5 @@ def enter_database():
     database.close()
 
 
-if __name__ == "__main__":
+def initialize():
     enter_database()

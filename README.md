@@ -24,23 +24,36 @@ Our website is a collection of top-tier, big-brain, and purely skill based games
 2. Install python virtualenv if it has not been done so already.  
     ```bash
     # For macOS and Linux
-    python3 -m pip install --user virtualenv
-    # For Windows
-    py -m pip install --user virtualenv
+    python3 -m pip install virtualenv
+3. Create a virtual environment by running:
+    ```bash   
+    python3 -m venv venv
+    # If this command does not work, try
+    python -m venv venv
     ```
-3. Initialize the server by running the following:
+4. Activate the virtual environment
     ```bash
-    ./init.sh
-    ```
-4. Activate the virtual environment by running the appropriate command:
-    ```bash
-    # If you are running zsh
-    source venv/bin/activate
-    # If you are running bash
+    # If you are using Bash:
     . venv/bin/activate
-    ``` 
-5. Start the web server by running:
+    # If you are using zsh:
+    source venv/bin/activate
+    ```
+5. Install the required dependencies:
+    ```bash
+    pip install -r requirements.txt
+    # If this command does not work, try running:
+    pip3 install -r requirements.txt
+    ```
+6. Initialize the database by running the following:
+    ```bash
+    python3 data/database_builder.py
+    python3 initDatabase.py
+    # If these commands do not work, try running
+    python data/database_builder.py
+    python initDatabase.py
+    ```
+7. Start the web server by running:
     ```bash
     python3 app.py
     ```
-6. Open a web browser and type the following into the address "127.0.0.1:5000"
+8. Open a web browser and type the following into the address "127.0.0.1:5000"
