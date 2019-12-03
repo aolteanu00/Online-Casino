@@ -1,28 +1,45 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Payment</title>
-    </head>
-    <body>
-        <h1>Add MAWDollars</h1>
-        <form action="/pay/processed" method="POST">
-            <label>Card number:</label>
-            <input type="number" name="card_number" required/>
-            <br>
-            <label>Expiration month:</label>
-            <input type="number" name="month" placeholder="MM" min="0" max="12" required/>
-            <br>
-            <label>Expiration year:</label>
-            <input type="number" name="year" min="19" max="99" placeholder="YY" required/>
-            <br>
-            <label>CVV:</label>
-            <input type="number" name="cvv" min="0" max="999" required/>
-            <br>
-            <label>We will charge USD. Please enter WHOLE dollars only</label>
-            <br>
-            <input type="number" name="pay_amount" placeholder="Amount" min="1" required/>
-            <br>
-            <input type="submit" value="Get MAWDollars!!!"/>
-        </form>
-    </body>
-</html>
+{% extends "template_with_nav.html" %}
+{% block title %}
+    Payment
+{% endblock %}
+{% block body %}
+    <h1 class="text-center">Get MAWDollars</h1>
+    <form class="container-fluid" action="/pay/processed" method="POST">
+        <div class="row">
+            <div class="col">
+                <label>First name</label>
+                <input type="text" class="form-control" required>
+            </div>
+            <div class="col">
+                <label>Last name</label>
+                <input type="text" class="form-control" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>Card number</label>
+            <input type="number" class="form-control" name="card_number" class="form-control" required/>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label>Expiration Month</label>
+                <input type="number" class="form-control" name="month" placeholder="MM" min="0" max="12" required/>
+            </div>
+            <div class="col">
+                <label>Expiration Year</label>
+                <input type="number" class="form-control" name="year" min="19" max="99" placeholder="YY" required/>
+            </div>
+            <div class="col">
+                <label>CVV:</label>
+                <input type="number" class="form-control" name="cvv" min="100" max="999" required/>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>Amount</label>
+            <!-- Set upper limit to amount input to prevent overflow-->
+            <input type="number" name="pay_amount" name="card_number" class="form-control" required
+                   placeholder="MAWDollars" min="0" max="10000"/>
+            <small class="text-muted">1 MAWDollar = 1 USD</small>
+        </div>
+        <input type="submit" value="Get MAWDollars!!!" class="btn btn-success"/>
+    </form>
+{% endblock %}

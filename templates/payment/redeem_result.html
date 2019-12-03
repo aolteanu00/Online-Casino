@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Redeemed!</title>
-    </head>
-    <body>
-        <h1>You withdrew {{ amount_MAWD }} MAWDollars for {{ amount_currency }} {{currency}}</h1>
-    </body>
-</html>
+{% extends "template_with_nav.html" %}
+{% block title %}
+    Redeemed!
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="text-center">You withdrew {{ amount_MAWD }} MAWDollars for {{ amount_currency }} {{currency}}</h1>
+        <div class="text-center">
+            <a href="/game" class="btn btn-link">Start playing</a>
+        </div>
+    </div>
+{% endblock %}
