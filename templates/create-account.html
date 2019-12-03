@@ -11,15 +11,15 @@
                 {% endfor %}
             </ul>
         {% endwith %}
-        <form method="GET">
+        <form method="POST">
             <label>Username</label>
-            <input type="text" name="username">
+            <input type="text" name="username" required>
             <br/>
             <label>Password</label>
-            <input type="text" name="password">
+            <input type="password" name="password" required>
             <br/>
             <label>Password again</label>
-            <input type="text" name="password_repeat">
+            <input type="password" name="password_repeat" required>
             <br/>
             <input type="submit" value="Submit">
             <br/>
