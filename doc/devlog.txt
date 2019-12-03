@@ -136,6 +136,22 @@ Added bootstrap to the project (templating). Remodeled the entire pokemon game (
 Fixed bug of being able to change bet amount mid game.
 Added ability to leave a game. (Kinda uselss, might remove)
 
+olteanuA -- 2019-11-30 00:59
+Introduced the usage of sessions to maintain all user and dealer cards, allowing me to display each hand in true To21 fashion.
+Ran into an issue though where for some reason session["userHand"] fails to update in html, although prints the desired result in terminal.
+  - the bug is in line 250 of app.py.
+  - line 251 has a print command where the user's hand is properly displayed. however, upon attempting to display in html the user's hand does not change from its original state.
+Polished code by removing unnecessary and redundant code and variables, and improved overall neatness.
+Addressed certain bugs in the algorithms behind calculating hands and results.
+
+olteanuA -- 2019-12-2 00:31
+"Bootstrapified" all of To21:
+  - created a general overarching theme
+  - made my html pages far more vivid and captivating to the eye
+  - introduced being able to view all of the user and dealer cards as actual "cards" through the usage of Bootstrap grids
+I've essentially planned out and incorporated most of my Bootstrap aspirations and will finish tomorrow.
+Still have not been able to fix bug where user cards update and appropriately display upon being dealt a new card though, thus, I will visit the dojo tomorrow.
+
 williamC -- 2019-11-13 19:28
 Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
 
@@ -144,3 +160,11 @@ Users no longer start of with free money
 Updated the pokemon game rules in teh design doc
 Added the due date (oops)
 Changed parts of the to21 game
+
+olteanuA -- 2019-12-03 3:45
+"Bootstrapified" to21rules.html, game.html
+  - to21rules now has To21 theme
+  - game.html no longer looks bland, including images that redirect to appropriate game upon being clicked
+Made final bootstrap modifications to all To21 html files in order to achieve desired aesthetic result
+Made final tweaks to To21 calculation algorithms and fixed bugs
+Completed final code polish for To21 game

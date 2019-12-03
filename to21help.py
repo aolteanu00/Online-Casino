@@ -94,6 +94,6 @@ def drawCard(deckid):
     if value == "KING" or value == "QUEEN" or value == "JACK":
         return 10
     if value == "ACE":
-        return 0 #decide value of ace during game
+        return 1 #decide value of ace during game
     else:
         return int(value)

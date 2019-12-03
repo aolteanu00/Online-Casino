@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Login</title>
-    </head>
 
-    <body>
-      <center><h1> To21 </h1></center>
-      <p> Your current total: {{UCA}} </p>
-      <p> Number of cards you have drawn: {{UNUM}} </p>
+  <style type="text/css">
+    div{ border: 1px solid #000; }
+    body { background: green !important; }
+    a { text-decoration: underline !important;}
+  </style>
 
-      <p> Dealer's current total: ??? </p>
-      <p> Number of cards the dealer has drawn: {{DNUM}} </p>
+  <head>
+    <title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  </head>
 
-      <a href="/to21/dealCard">Hit</a>
-      <a href="/to21/results">Stand</a>
+  <body>
+    <br>
+    <div class="p-3 mb-2 bg-danger text-white" style="font-size:35px;"><center>To21</center></div>
+    <center><p class="text-white"> Your current total: {{UCA}} </p></center>
+    <!-- display user cards -->
+    <div class="container">
+      <div class="row">
+        {%for i in session["userHand"]%}
+        <div class="col-sm">
+          <center><p style="color:white;font-size:40px;"> {{i}} </p></center>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <center><p class="text-white"> Dealer's current total: ??? </p></center>
+    <!-- display dealer cards -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <center><p style="color:white;font-size:40px;"> {{dealerCards[0]}} </p></center>
+        </div>
+        <div class="col-sm">
+          <center><p style="color:white;font-size:40px;"> ??? </p>
+        </div>
+      </div>
+    </div>
+    <br>
+     <center><a href="/to21/dealCard" class="text-white">Hit</a></center>
+     <br>
+     <center><a href="/to21/results" class="text-white">Stand</a></center>
+     <br>
+     <div class="fixed-bottom"><div class="p-3 mb-2 bg-danger text-white" style="font-size:2px;"><center>MAWD takes no responsibility in any psychological damage dealt to the user. One plays these games at their own risk.</center></div></div>
     </body>
+
 </html>
