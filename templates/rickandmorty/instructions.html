@@ -1,0 +1,26 @@
+{% extends "template_with_nav.html" %}
+{% block title %}
+    Rick and Morty Trivia Instructions
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">How to Play Rick and Morty Trivia!</h1>
+
+        <h3>What is this game?</h3>
+        <p>Rick and Morty Trivia is one of the three games where you can bet your MAWDollars against the computer.
+           You are given three images of characters from the popular adult swim show Rick and Morty.
+           You are given four choices per question and must answer all questions by choosing one out of the 4 options.
+           You will either lose, break even, or gain MAWDollars depending on the number of answers you get correct.</p>
+
+        <h3>How do I determine how much I win or lose?</h3>
+        If you get
+        <ul>
+            <li>0 questions correct: You lose the money you bet.</li>
+            <li>1 question correct: You lose half the money you bet</li>
+            <li>2 questions correct: You break even.</li>
+            <li>3 questions correct: You double up.</li>
+        </ul>
+
+        <a class="play_instructions btn btn-warning" href="/rickandmorty">Start Playing</a>
+    </div>
+{% endblock %}
