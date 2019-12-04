@@ -48,6 +48,12 @@ At this point, the program is able to display a random image of a character from
 williamC -- 2019-11-20 9:54
 Cached pokemon data (only to JSON not DB)
 
+alexO -- 2019-11-21 21:48
+FINALLY discovered reason behind codebreaking bug when attempting to work with my API
+I discovered that packages such as "Request" were being installed under python2.7 automatically rather than python3
+Created API helper functions within to21help.py
+Completed creation of all helper functions I believe will be necessary and thoroughly tested them
+
 MAWD -- 2019-11-20 18:11
 THe issue of ego hindering work exists in almost any field, but it seems more prevalent in the field of computer science. The article does a really good job explaioning how to avoid those problems using proper examples. We personally liked the interaction between Bill and Marilyn, mostly because Bill laughing at his own horrible code was relatable.
 THINGS WE WILL DO
@@ -59,12 +65,6 @@ alexO -- 2019-11-21 19:23
 Determined I needed to improve my database. Before it only stored 'deckid'(necessary for my API), 'userTotal'(user's current score in To21) and 'dealerTotal'(dealer's current score in To21)
 Now my table stores the number of cards drawn by the player and dealer as well, as I feel this is information the user deserves to have
 Created general skeletons of To21 app.py routes and corresponding html files
-
-alexO -- 2019-11-21 21:48
-FINALLY discovered reason behind codebreaking bug when attempting to work with my API
-I discovered that packages such as "Request" were being installed under python2.7 automatically rather than python3
-Created API helper functions within to21help.py
-Completed creation of all helper functions I believe will be necessary and thoroughly tested them
 
 williamC -- 2019-11-21 23:05
 Finished caching data and reading into DB (brought initialization time from 4s to .13s).
@@ -80,7 +80,7 @@ Changed how to cache data. Now we initially pull from api but store the results 
 created function to update database from said json file.
 Uploaded json file to github.
 
-williamC -- 2019-11-23 00:28
+williamC -- 2019-11-23 00:028
 Finished logic for determining who wins in pokemon game and wrote tests (automated testing)
 
 williamC -- 2019-11-23 13:36
@@ -126,17 +126,17 @@ William asked that instead I do so through the usage of sessions. This will most
 The game looks basic as only fundamental and necessary aspects of the game has been incorporated
 Now I can focus on aesthetic and smaller features
 
-mohidulA 2019-11-27 10:49
-Updated database for games in the design docs
-changed some instructions for R&M and pokemon game
-Clarified the balance system (and the test user starts with MAWD$1000)
-
 devinL 2019-11-27 18:23
 Completely changed style of coding to use Blueprints which allow for better organization of code.
 Updated app.py and deleted files to reflect that change.
 Made rick and morty game folder and html folder to reflect change to using Blueprints.
 Changed rick and morty database to no longer use id.
 Made very basic select and result page for rick and morty.
+
+mohidulA 2019-11-27 10:49
+Updated database for games in the design docs
+changed some instructions for R&M and pokemon game
+Clarified the balance system (and the test user starts with MAWD$1000)
 
 williamC -- 2019-11-28 22:09
 Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.
@@ -155,9 +155,6 @@ Ran into an issue though where for some reason session["userHand"] fails to upda
   - line 251 has a print command where the user's hand is properly displayed. however, upon attempting to display in html the user's hand does not change from its original state.
 Polished code by removing unnecessary and redundant code and variables, and improved overall neatness.
 Addressed certain bugs in the algorithms behind calculating hands and results.
-
-williamC -- 2019-11-30 17:22
-Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
 
 devinL -- 2019-12-01 16:38
 Made functions in game logic to help with generation of answer choices from the database of characters.
@@ -191,6 +188,15 @@ Made final bootstrap modifications to all To21 html files in order to achieve de
 Made final tweaks to To21 calculation algorithms and fixed bugs
 Completed final code polish for To21 game
 
+mohidulA -- 2019-12-03 17:50
+Users no longer start of with free money
+Updated the pokemon game rules in teh design doc
+Added the due date (oops)
+Changed parts of the to21 game
+
+williamC -- 2019-11-13 19:28
+Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
+
 alexO -- 2019-12-03 15:54
 Reworked code to allow the display of physical card images
 Further polished bootstrap and html to make To21 look even better. I keep coming up with new ideas.
@@ -201,13 +207,7 @@ Finished the README.md (how to set up the python environment and run the program
 Added a back button to the instruction pages
 Finished bootstrapping login page
 Added go back for payment page
-Cleaned up dev log (wrong time order)
-
-mohidulA -- 2019-12-03 17:50
-Users no longer start of with free money
-Updated the pokemon game rules in teh design doc
-Added the due date (oops)
-Changed parts of the to21 game
+Updated devlog with new sitemap and documentation on session (originally docstring in python file)
 
 devinL -- 2019-12-03 19:32
 Revamped the look of Select page to look more aesthetic.
