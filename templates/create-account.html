@@ -1,29 +1,41 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Create Account</title>
-    </head>
-    <body>
-        {% with errors = get_flashed_messages() %}
-            <ul>
-                {% for error in errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endwith %}
+{% extends 'template.html' %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+    <div class="center-container">
         <form method="POST">
-            <label>Username</label>
-            <input type="text" name="username" required>
-            <br/>
-            <label>Password</label>
-            <input type="password" name="password" required>
-            <br/>
-            <label>Password again</label>
-            <input type="password" name="password_repeat" required>
-            <br/>
-            <input type="submit" value="Submit">
-            <br/>
+            <h1 class="text-center">Big Cheef's Suprise Mechanics</h1>
+            <br>
+            <div class="input-group flex-nowrap mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">Username</span>
+                </div>
+                <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="input-group flex-nowrap mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">Password</span>
+                </div>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+            <div class="input-group flex-nowrap mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="addon-wrapping">Password</span>
+                </div>
+                <input type="password" class="form-control" name="password_repeat" required>
+            </div>
+            <input class="btn btn-success btn-block mb-2" type="Submit" value="Submit" required/>
+            {% with errors = get_flashed_messages() %}
+                <ul>
+                    {% for error in errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endwith %}
             <a href="/login">Return to login</a>
-        </forM>
-    </body>
-</html>
+        </form>
+    </div>
+{% endblock %}
