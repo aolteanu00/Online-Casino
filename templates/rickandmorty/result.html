@@ -1,18 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Rick and Morty</title>
-</head>
-<body>
-  {{winner_message}}
-  {{balance_message}}
-  Question 1 answer: {{correct_ans[0]}}
-  Question 2 answer: {{correct_ans[1]}}
-  Question 3 answer: {{correct_ans[2]}}
-  <div class="text-center">
-      <a href="/rickandmorty">Play again!</a>
-      <br>
-      <a href="/game">Play other games</a>
-  </div>
-</body>
-</html>
+{% extends "template.html" %}
+{% block title %}
+    Game Result!
+{% endblock %}
+{% block body %}
+  <h1 class="text-center">Rick and Morty Trivia Answers</h1>
+  <h3>{{winner_message}}<br>{{balance_message}}<br></h3>
+      <div class="card-group">
+        <div class="card">
+          <img src= "{{images[0]}}"/ class="card-img-top"><br>
+          Question 1 answer: {{correct_ans[0]}}
+        </div>
+        <div class="card">
+          <img src= "{{images[1]}}"/ class="card-img-top"><br>
+          Question 2 answer: {{correct_ans[1]}}
+        </div>
+        <div class="card">
+          <img src= "{{images[2]}}"/ class="card-img-top"><br>
+          Question 3 answer: {{correct_ans[2]}}
+        </div>
+      </div>
+  <center>
+    <form action="/rickandmorty">
+      <input class="btn btn-danger" type="submit" value="Play again!">
+    </form>
+    <form action="/game">
+      <input class="btn btn-danger" type="submit" value="Play other games">
+    </form>
+  </center>
+{% endblock %}

@@ -138,6 +138,9 @@ def instruction():
 
     if session["current_game"] == "to21":
         return redirect(url_for("to21rules"))
+        
+    if session["current_game"] == "rickandmorty_game.rickandmorty":
+        return redirect(url_for("rickandmorty_game.rickandmorty_instructions"))
 
     return "Instructions"
 

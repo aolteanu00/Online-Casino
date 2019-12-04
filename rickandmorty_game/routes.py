@@ -105,6 +105,9 @@ def rickandmorty_result():
     if ("game_state" not in session) or session["game_state"] != "selecting":
         return redirect(url_for(".rickandmorty"))
 
+    if len(request.form) != 3:
+        return redirect(url_for(".rickandmorty"))
+
     session["game_state"] = "result"
     user_ans_1 = request.form["answer"]
     user_ans_2 = request.form["answer1"]
@@ -113,25 +116,32 @@ def rickandmorty_result():
     user_change_balance = user_balance_lost_rickandmorty(user_ans_list, session["correct_ans"], session["bet_amount"])
     user_current_balance = get_balance(session["username"])
 
-    if user_change_balance == 0:
-        winner_message = "Tie!"
+    bet_amt = session["bet_amount"]
+    half_bet_amt = session["bet_amount"] * .5
+    if user_change_balance == session["bet_amount"]:
+        winner_message = "You broke even!"
         balance_message = f"The {session['bet_amount']} MAWDollars you bet was returned"
         new_balance = user_current_balance + session["bet_amount"]
-    elif user_change_balance > 0:
+    elif user_change_balance > session["bet_amount"]:
         winner_message = "You won!"
         # If user won, he/she gets back what was bet and what was won
-        new_balance = user_current_balance + session["bet_amount"] + user_change_balance
-        balance_message = f"You won {user_change_balance}"
+        new_balance = user_current_balance + user_change_balance
+        balance_message = f"You won {user_change_balance} MAWDollars"
+    elif user_change_balance == 0:
+        winner_message = "You lost"
+        new_balance = user_current_balance + user_change_balance
+        balance_message = f"You lost {bet_amt} MAWDollars"
     else:
         winner_message = "You lost"
         # If user lost, he/she lost what was bet and what was lost
         new_balance = user_current_balance + user_change_balance
-        balance_message = f"You lost {-user_change_balance}"
+        balance_message = f"You lost {half_bet_amt} MAWDollars"
 
     print("User old balance: {}\nUser new Balance: {}".format(user_current_balance, new_balance))
     update_balance(session["username"], new_balance)
 
     correct_answers = session["correct_ans"]
+    character_images = [get_character_image(name) for name in session["correct_ans"]]
     del session["game_state"]
     session["paid"] = False
     session["bet_amount"] = 0
@@ -140,7 +150,7 @@ def rickandmorty_result():
     del session["wrong_ans"]
     del session["current_game"]
 
-    return render_template("rickandmorty/result.html", winner_message = winner_message, balance_message = balance_message, correct_ans = correct_answers)
+    return render_template("rickandmorty/result.html", winner_message = winner_message, balance_message = balance_message, correct_ans = correct_answers, images = character_images)
 
 @rickandmorty_game.route("/leave-rickandmorty")
 def leave_rickandmorty():
@@ -152,3 +162,7 @@ def leave_rickandmorty():
     del session["wrong_ans"]
     del session["current_game"]
     return redirect(url_for("game"))
+
+@rickandmorty_game.route("/rickandmorty/instructions")
+def rickandmorty_instructions():
+    return render_template("rickandmorty/instructions.html");
