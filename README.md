@@ -40,9 +40,9 @@ Our website is a collection of top-tier, big-brain, and purely skill based games
     ```
 5. Install the required dependencies:
     ```bash
-    pip install -r requirements.txt
+    pip install -r doc/requirements.txt
     # If this command does not work, try running:
-    pip3 install -r requirements.txt
+    pip3 install -r doc/requirements.txt
     ```
 6. Initialize the database by running the following:
     ```bash

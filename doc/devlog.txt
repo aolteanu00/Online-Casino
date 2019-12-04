@@ -75,6 +75,11 @@ williamC -- 2019-11-22 13:03
 Added instructions to create virtual environment and install required packages. Added more automation to init.sh for
 user setting up the server
 
+devinL -- 2019-11-22 20:49
+Changed how to cache data. Now we initially pull from api but store the results in a json file which is pushed to github.
+created function to update database from said json file.
+Uploaded json file to github.
+
 williamC -- 2019-11-23 00:028
 Finished logic for determining who wins in pokemon game and wrote tests (automated testing)
 
@@ -121,6 +126,13 @@ William asked that instead I do so through the usage of sessions. This will most
 The game looks basic as only fundamental and necessary aspects of the game has been incorporated
 Now I can focus on aesthetic and smaller features
 
+devinL 2019-11-27 18:23
+Completely changed style of coding to use Blueprints which allow for better organization of code.
+Updated app.py and deleted files to reflect that change.
+Made rick and morty game folder and html folder to reflect change to using Blueprints.
+Changed rick and morty database to no longer use id.
+Made very basic select and result page for rick and morty.
+
 mohidulA 2019-11-27 10:49
 Updated database for games in the design docs
 changed some instructions for R&M and pokemon game
@@ -144,8 +156,11 @@ Ran into an issue though where for some reason session["userHand"] fails to upda
 Polished code by removing unnecessary and redundant code and variables, and improved overall neatness.
 Addressed certain bugs in the algorithms behind calculating hands and results.
 
-williamC -- 2019-11-30 17:23
-Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
+devinL -- 2019-12-01 16:38
+Made functions in game logic to help with generation of answer choices from the database of characters.
+These functions include getting character names, images and updating user balance.
+Result page still incomplete.
+Select page now displays the 3 images along with 3 wrong answer choices per image.
 
 alexO -- 2019-12-02 00:31
 "Bootstrapified" all of To21:
@@ -154,6 +169,16 @@ alexO -- 2019-12-02 00:31
   - introduced being able to view all of the user and dealer cards as actual "cards" through the usage of Bootstrap grids
 I've essentially planned out and incorporated most of my Bootstrap aspirations and will finish tomorrow.
 Still have not been able to fix bug where user cards update and appropriately display upon being dealt a new card though, thus, I will visit the dojo tomorrow.
+
+devinL -- 2019-12-02 17:17
+Selecting page now displays all answer choices correctly (3 wrong answers along with a randomly placed correct ans).
+***encountered problem***
+  - Rick and morty api includes characters that they do not have images for possible 5-10 out of 473
+  - Therefore there is a very small chance that the questionnaire will contain a blank image
+Added results route to rickandmorty routes.
+Results page now able to read the user's selected answers from session and compare them to the actual answers.
+Using the update user balance function, the user's balance is automatically updated upon submission of the questionnaire.
+Results page has the winning/losing messages and the correct answers
 
 alexO -- 2019-12-03 3:45
 "Bootstrapified" to21rules.html, game.html
@@ -169,6 +194,9 @@ Updated the pokemon game rules in teh design doc
 Added the due date (oops)
 Changed parts of the to21 game
 
+williamC -- 2019-11-13 19:28
+Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
+
 alexO -- 2019-12-03 15:54
 Reworked code to allow the display of physical card images
 Further polished bootstrap and html to make To21 look even better. I keep coming up with new ideas.
@@ -177,3 +205,18 @@ Incorporated images in game.html to make it look cooler
 williamC -- 2019-12-03 16:45
 Finished the README.md (how to set up the python environment and run the program. Removed init.sh)
 Added a back button to the instruction pages
+Finished bootstrapping login page
+Added go back for payment page
+
+devinL -- 2019-12-03 19:32
+Revamped the look of Select page to look more aesthetic.
+Used bootstrap's card groups to organize questions into a 1x3 grid which is better than the previous vertical design.
+Fixed typo in code resulting in answer choice d's to not display properly.
+Made instructions page for rick and morty Trivia.
+Added the images of the questions from the select page to the result page.
+revamped the look of the result page to reflect the changes made to select page once again using card groups.
+changed the return value of user balance update to reflect game rules and changed if statements in routes to reflect that change.
+Added check to restrict users from accessing the results page if they have not filled out the questionnaire.
+Added play again and play other games buttons.
+Game is functional and ready to demo!
+
