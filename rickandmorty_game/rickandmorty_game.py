@@ -44,10 +44,10 @@ def user_balance_lost_rickandmorty(user_choices: list, correct_ans: list, bet_am
         index += 1
 
     if number_correct == 0:
-        return -bet_amount
-    elif number_correct == 1:
-        return -bet_amount * .5
-    elif number_correct == 2:
         return 0
+    elif number_correct == 1:
+        return bet_amount * .5
+    elif number_correct == 2:
+        return bet_amount
     elif number_correct == 3:
         return bet_amount * 2
