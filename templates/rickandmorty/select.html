@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Rick and Morty</title>
-</head>
-<body>
-  <center>
+{% extends "template.html" %}
+{% block title %}
+Playing Rick and Morty Trivia!
+{% endblock %}
+{% block body %}
+<center>
   {% set index = namespace(value = 0) %}
   {% set wrong_index = namespace(value = 0) %}
-  <form action="/rickandmorty/result" method="POST">
-    <img src= "{{character_images[0]}}"/><br>
-      {% if correct_ans_index[index.value] == 0 %}
+  <h1 class="text-center">Rick and Morty Trivia</h1>
+  <div class="card-group">
+    <div class="card">
+      <form action="/rickandmorty/result" method="POST">
+        <img src= "{{character_images[0]}}"/ class="card-img-top"><br>
+        <div class="card-body text-center">
+          {% if correct_ans_index[index.value] == 0 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer">{{answers[index.value]}}<br>
           {% set index.value = index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
@@ -18,7 +21,7 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 1 %}
+          {% elif correct_ans_index[index.value] == 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer">{{answers[index.value]}}<br>
@@ -27,7 +30,7 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 2 %}
+          {% elif correct_ans_index[index.value] == 2 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
@@ -36,7 +39,7 @@
           {% set index.value = index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 3 %}
+          {% elif correct_ans_index[index.value] == 3 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer">{{wrong_answers[wrong_index.value]}}<br>
@@ -45,9 +48,13 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer">{{answers[index.value]}}<br>
           {% set index.value = index.value + 1 %}
-      {% endif %}
-    <img src= "{{character_images[1]}}"/><br>
-      {% if correct_ans_index[index.value] == 0 %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <img src= "{{character_images[1]}}"/ class="card-img-top"><br>
+        <div class="card-body text-center">
+          {% if correct_ans_index[index.value] == 0 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer1">{{answers[index.value]}}<br>
           {% set index.value = index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
@@ -56,7 +63,7 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 1 %}
+          {% elif correct_ans_index[index.value] == 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer1">{{answers[index.value]}}<br>
@@ -65,7 +72,7 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 2 %}
+          {% elif correct_ans_index[index.value] == 2 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
@@ -74,7 +81,7 @@
           {% set index.value = index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 3 %}
+          {% elif correct_ans_index[index.value] == 3 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer1">{{wrong_answers[wrong_index.value]}}<br>
@@ -83,9 +90,13 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer1">{{answers[index.value]}}<br>
           {% set index.value = index.value + 1 %}
-      {% endif %}
-    <img src= "{{character_images[2]}}"/><br>
-      {% if correct_ans_index[index.value] == 0 %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <img src= "{{character_images[2]}}"/ class="card-img-top"><br>
+        <div class="card-body text-center">
+          {% if correct_ans_index[index.value] == 0 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer2">{{answers[index.value]}}<br>
           {% set index.value = index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
@@ -94,7 +105,7 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 1 %}
+          {% elif correct_ans_index[index.value] == 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer2">{{answers[index.value]}}<br>
@@ -103,7 +114,7 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 2 %}
+          {% elif correct_ans_index[index.value] == 2 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
@@ -112,7 +123,7 @@
           {% set index.value = index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
-      {% elif correct_ans_index[index.value] == 3 %}
+          {% elif correct_ans_index[index.value] == 3 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{wrong_answers[wrong_index.value]}}" name="answer2">{{wrong_answers[wrong_index.value]}}<br>
@@ -121,14 +132,19 @@
           {% set wrong_index.value = wrong_index.value + 1 %}
           <input type="radio" value="{{answers[index.value]}}" name="answer2">{{answers[index.value]}}<br>
           {% set index.value = index.value + 1 %}
-      {% endif %}
+          {% endif %}
+        </div>
+      </div>
       <input type="submit" value="Submit">
-  </form>
+    </form>
   </div>
-  <form action="/leave-rickandmorty" method="GET">
-      <input class="btn btn-danger" type="submit" value="Leave Game">
-  </form>
-  Leaving this game will NOT return the amount you place bet on.
-  </div>
-</body>
-</html>
+
+</center>
+<form action="/leave-rickandmorty" method="GET">
+  <input class="btn btn-danger" type="submit" value="Leave Game">
+</form>
+Leaving this game will NOT return the amount you place bet on.
+</div>
+<br>
+<br>
+{% endblock %}
