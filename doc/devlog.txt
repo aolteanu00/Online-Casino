@@ -111,7 +111,7 @@ HOME STRETCH PLAN
 williamC -- 2019-11-26 9:25
 Firefox has a feature where going back in history uses the cache page instead of asking the server to send info again. This caused a bug of user being able to play multiple games of same cards. This is fixed now.
 
-williamC -- 2019-11-26
+williamC -- 2019-11-26 22:48
 Removed all database binary files from master branch.
 Retrieve and store currency exchange rates.
 
@@ -126,7 +126,7 @@ Updated database for games in the design docs
 changed some instructions for R&M and pokemon game
 Clarified the balance system (and the test user starts with MAWD$1000)
 
-williamC -- 2019-11-28
+williamC -- 2019-11-28 22:09
 Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.
 Result page of pokemon will show how much was gain or lost.
 All pokemon choices are no unique to the player (user and computer can share the same pokemon, however)
