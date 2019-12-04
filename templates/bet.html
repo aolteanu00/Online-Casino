@@ -1,30 +1,55 @@
+{% extends 'template_with_nav.html' %}
+
+{% block title %}
+Bet
+{% endblock %}
+
+{% block body %}
+    <form class="container-fluid" action="bet" method="GET">
+        {% with errors = get_flashed_messages() %}
+            <ul>
+                {% for error in errors %}
+                    <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endwith %}
+        <div class="text-center">
+            <h2>Spending Amount</h2>
+            <small class="figure-caption">In MAWDollars</small>
+            <br>
+            <div class="btn-group">
+                <input type="submit" name="spending_amount" value="2" class="btn btn-success btn-lg"/>
+                <input type="submit" name="spending_amount" value="10" class="btn btn-success btn-lg"/>
+                <input type="submit" name="spending_amount" value="20" class="btn btn-success btn-lg"/>
+            </div>
+        </div>
+        <div class="container my-5">
+            <div class="row">
+                <input class="col btn btn-success" type="submit" name="add_funds" value="Add funds">
+                <input class="col btn btn-danger" type="submit" name="go_back" value="Go back">
+                <input class="col btn btn-primary" type="submit" name="instruction" value="Instructions">
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
 <!DOCTYPE html>
 <html>
     <head>
         <title>{{ game }}</title>
     </head>
     <body>
-        {% with errors = get_flashed_messages() %}
-            <ul>
-                {% for error in errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endwith %}
+
         <form action="bet" method="GET">
-            <label>Spending Amount</label>
+
             <br/>
             <input type="submit" name="spending_amount" value="2"/>
-            <br/>
+
             <input type="submit" name="spending_amount" value="10"/>
-            <br/>
+
             <input type="submit" name="spending_amount" value="20"/>
             <br/>
-            <input type="submit" name="add_funds" value="Add funds">
-            <br/>
-            <input type="submit" name="go_back" value="Go back">
-            <br/>
-            <input type="submit" name="instruction" value="Instructions">
+
         </form>
     </body>
 </html>

@@ -205,6 +205,8 @@ Incorporated images in game.html to make it look cooler
 williamC -- 2019-12-03 16:45
 Finished the README.md (how to set up the python environment and run the program. Removed init.sh)
 Added a back button to the instruction pages
+Finished bootstrapping login page
+Added go back for payment page
 
 devinL -- 2019-12-03 19:32
 Revamped the look of Select page to look more aesthetic.
@@ -217,3 +219,4 @@ changed the return value of user balance update to reflect game rules and change
 Added check to restrict users from accessing the results page if they have not filled out the questionnaire.
 Added play again and play other games buttons.
 Game is functional and ready to demo!
+

@@ -17,6 +17,12 @@ def pay_processed():
     if "username" not in session:
         return redirect(url_for("login"))
 
+    if "go_back" in request.form:
+        if "current_game" in session:
+            return redirect(url_for(session["current_game"]))
+        else:
+            return redirect(url_for("game"))
+
     # Make sure user filled out all categories
     if all(keys in ["card_number", "month", "year", "cvv", "pay_amount"] for keys in request.form.keys()):
         # All fields filled out
