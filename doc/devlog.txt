@@ -22,7 +22,7 @@ Added DEADLINES FOLLOW THEM PLEASE!!!!
 williamC -- 2019-11-18 21:33
 Code base: Finished writing the login system. Wrote the database, html, and backend logic. There is no bootstrap, just raw HTML.
 
-olteanuA -- 2019-11-19 1:20
+alexO -- 2019-11-19 1:20
 Created to21help.py and to21test.py which will store helper functions and facilitate the creation of To21
   - created To21 database and 'gameinfo' table
   - created several sql functions to facilitate the manipulation of 'gameinfo'
@@ -48,7 +48,7 @@ At this point, the program is able to display a random image of a character from
 williamC -- 2019-11-20 9:54
 Cached pokemon data (only to JSON not DB)
 
-olteanuA -- 2019-11-21 21:48
+alexO -- 2019-11-21 21:48
 FINALLY discovered reason behind codebreaking bug when attempting to work with my API
 I discovered that packages such as "Request" were being installed under python2.7 automatically rather than python3
 Created API helper functions within to21help.py
@@ -61,7 +61,7 @@ THINGS WE WILL DO
   - We will make the environment as friendly as possible, especially for code review
   - Each programmer will try to reach out and ask for help when needed
 
-olteanuA -- 2019-11-21 19:23
+alexO -- 2019-11-21 19:23
 Determined I needed to improve my database. Before it only stored 'deckid'(necessary for my API), 'userTotal'(user's current score in To21) and 'dealerTotal'(dealer's current score in To21)
 Now my table stores the number of cards drawn by the player and dealer as well, as I feel this is information the user deserves to have
 Created general skeletons of To21 app.py routes and corresponding html files
@@ -116,7 +116,7 @@ HOME STRETCH PLAN
 williamC -- 2019-11-26 9:25
 Firefox has a feature where going back in history uses the cache page instead of asking the server to send info again. This caused a bug of user being able to play multiple games of same cards. This is fixed now.
 
-williamC -- 2019-11-26
+williamC -- 2019-11-26 22:48
 Removed all database binary files from master branch.
 Retrieve and store currency exchange rates.
 
@@ -138,7 +138,7 @@ Updated database for games in the design docs
 changed some instructions for R&M and pokemon game
 Clarified the balance system (and the test user starts with MAWD$1000)
 
-williamC -- 2019-11-28
+williamC -- 2019-11-28 22:09
 Can now add MAWDollars. We are not having any checks for credit card info because that is NOT the focus of the project.
 Result page of pokemon will show how much was gain or lost.
 All pokemon choices are no unique to the player (user and computer can share the same pokemon, however)
@@ -156,13 +156,13 @@ Ran into an issue though where for some reason session["userHand"] fails to upda
 Polished code by removing unnecessary and redundant code and variables, and improved overall neatness.
 Addressed certain bugs in the algorithms behind calculating hands and results.
 
-devinL -- 2019-12-1 16:38
+devinL -- 2019-12-01 16:38
 Made functions in game logic to help with generation of answer choices from the database of characters.
 These functions include getting character names, images and updating user balance.
 Result page still incomplete.
 Select page now displays the 3 images along with 3 wrong answer choices per image.
 
-olteanuA -- 2019-12-2 00:31
+alexO -- 2019-12-02 00:31
 "Bootstrapified" all of To21:
   - created a general overarching theme
   - made my html pages far more vivid and captivating to the eye
@@ -170,7 +170,7 @@ olteanuA -- 2019-12-2 00:31
 I've essentially planned out and incorporated most of my Bootstrap aspirations and will finish tomorrow.
 Still have not been able to fix bug where user cards update and appropriately display upon being dealt a new card though, thus, I will visit the dojo tomorrow.
 
-devinL -- 2019-12-2 17:17
+devinL -- 2019-12-02 17:17
 Selecting page now displays all answer choices correctly (3 wrong answers along with a randomly placed correct ans).
 ***encountered problem***
   - Rick and morty api includes characters that they do not have images for possible 5-10 out of 473
@@ -180,7 +180,7 @@ Results page now able to read the user's selected answers from session and compa
 Using the update user balance function, the user's balance is automatically updated upon submission of the questionnaire.
 Results page has the winning/losing messages and the correct answers
 
-olteanuA -- 2019-12-03 3:45
+alexO -- 2019-12-03 3:45
 "Bootstrapified" to21rules.html, game.html
   - to21rules now has To21 theme
   - game.html no longer looks bland, including images that redirect to appropriate game upon being clicked
@@ -188,7 +188,7 @@ Made final bootstrap modifications to all To21 html files in order to achieve de
 Made final tweaks to To21 calculation algorithms and fixed bugs
 Completed final code polish for To21 game
 
-mohidulA -- 2019-11-13 17:50
+mohidulA -- 2019-12-03 17:50
 Users no longer start of with free money
 Updated the pokemon game rules in teh design doc
 Added the due date (oops)
@@ -197,12 +197,12 @@ Changed parts of the to21 game
 williamC -- 2019-11-13 19:28
 Added instructions to Pokemon game. Made what pokemon were chosen more noticeable.
 
-olteanuA -- 2019-12-03 15:54
+alexO -- 2019-12-03 15:54
 Reworked code to allow the display of physical card images
 Further polished bootstrap and html to make To21 look even better. I keep coming up with new ideas.
 Incorporated images in game.html to make it look cooler
 
-caoW -- 2019-12-03 16:45
+williamC -- 2019-12-03 16:45
 Finished the README.md (how to set up the python environment and run the program. Removed init.sh)
 Added a back button to the instruction pages
 
